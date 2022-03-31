@@ -124,6 +124,8 @@ function setBlackBlocksToTheirOwnBlocks() {
 
 function setDroppableFunctionToCharacterBlocks() {
     for (let i = 0; i < whiteBlocks.length; i++) {
+        $(whiteBlocks[i]).css('z-index', 1);
+        $(blackBlocks[i]).css('z-index', 1);
         $(whiteBlocks[i]).draggable();
         $(blackBlocks[i]).draggable();
     }
