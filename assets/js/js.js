@@ -166,28 +166,41 @@ function setDroppableFunctionToCharacterBlocks(row, index, dropRow, index2, inde
 
     console.log(dropRow + " = droprow")
     console.log(index2 + " = index 2")
-    $(boardBlocksArr[dropRow]).children('div').eq(index2).off('droppable')
-    $(boardBlocksArr[dropRow]).children('div').eq(index2).droppable({
-        drop: function (event, ui) {
-            alert("dropped");
-            console.log("is this working")
-            ui.draggable.detach().appendTo($(this));
-            whenClickedOnABlockEl();
-            ui.draggable.position({of: $(this), my: 'left top', at: 'left top'});
-            ui.draggable.draggable('option', 'revert', false);
-        }
-    })
 
-    /*$(boardBlocksArr[dropRow]).children('div').eq(index3).droppable({
-        drop: function (event, ui) {
-            alert("droppeeeed");
-            console.log("is this working")
-            ui.draggable.detach().appendTo($(this));
-            $(this).addClass("ui-state-highlight")
-            whenClickedOnABlockEl();
-            console.log('dropped index 3')
+
+    for (let i = 0; i < 2; i++) {
+        if (i == 0) {
+            $(boardBlocksArr[dropRow]).children('div').eq(index2).off('droppable')
+            $(boardBlocksArr[dropRow]).children('div').eq(index2).droppable({
+
+                drop: function (event, ui) {
+                    alert("dropped");
+                    console.log("is this working")
+                    ui.draggable.detach().appendTo($(this));
+                    whenClickedOnABlockEl();
+                    ui.draggable.position({of: $(this), my: 'left top', at: 'left top'});
+                    ui.draggable.draggable('option', 'revert', false);
+                    $(boardBlocksArr[dropRow]).children('div').eq(index3).css('backgroundColor', 'black');
+                    $(boardBlocksArr[dropRow]).children('div').eq(index2).css('backgroundColor', 'black');
+                }
+            })
+        } else {
+            $(boardBlocksArr[dropRow]).children('div').eq(index3).off('droppable')
+            $(boardBlocksArr[dropRow]).children('div').eq(index3).droppable({
+
+                drop: function (event, ui) {
+                    alert("dropped");
+                    console.log("is this working")
+                    ui.draggable.detach().appendTo($(this));
+                    whenClickedOnABlockEl();
+                    ui.draggable.position({of: $(this), my: 'left top', at: 'left top'});
+                    ui.draggable.draggable('option', 'revert', false);
+                    $(boardBlocksArr[dropRow]).children('div').eq(index2).css('backgroundColor', 'black');
+                    $(boardBlocksArr[dropRow]).children('div').eq(index3).css('backgroundColor', 'black');
+                }
+            })
         }
-    })*/
+    }
 }
 
 
@@ -228,16 +241,25 @@ function whenClickedOnABlockEl() {
 
                     if (bool == false) {
                         if (arr1 == 1 && arr2 == 1) {
-                            alert('exists both block')
+                            alert('cant drop to the block')
                             return;
                         }
 
                         setDroppableFunctionToCharacterBlocks(i, j, i + 1, j + 1, j - 1);
 
                         if (j == 0) {
+                            if (arr1 == 1) {
+                                alert('cant drop to the block')
+                                return;
+                            }
+
                             $(boardBlocksArr[i + 1]).children('div').eq(j + 1).css("backgroundColor", 'green');
                             $(boardBlocksArr[i + 1]).children('div').eq(j + 1).css("opacity", 80);
                         } else if (j == 7) {
+                            if (arr2 == 1) {
+                                alert('cant drop to the block')
+                                return;
+                            }
                             $(boardBlocksArr[i + 1]).children('div').eq(j - 1).css("backgroundColor", 'green');
                             $(boardBlocksArr[i + 1]).children('div').eq(j - 1).css("opacity", 80);
                         } else {
@@ -257,16 +279,25 @@ function whenClickedOnABlockEl() {
                         }
                     } else {
                         if ((arr1 == 1) && (arr2 == 1)) {
-                            alert('exists both block')
+                            alert('cant drop to the block')
                             return;
                         }
 
                         setDroppableFunctionToCharacterBlocks(i, j, i - 1, j + 1, j - 1);
 
                         if (j == 0) {
+                            if (arr1 == 1) {
+                                alert('cant drop to the block')
+                                return;
+                            }
                             $(boardBlocksArr[i - 1]).children('div').eq(j + 1).css("backgroundColor", 'green');
                             $(boardBlocksArr[i - 1]).children('div').eq(j + 1).css("opacity", 80);
                         } else if (j == 7) {
+                            if (arr2 == 1) {
+                                alert('cant drop to the block')
+                                return;
+                            }
+
                             $(boardBlocksArr[i - 1]).children('div').eq(j - 1).css("backgroundColor", 'green');
                             $(boardBlocksArr[i - 1]).children('div').eq(j - 1).css("opacity", 80);
                         } else {
