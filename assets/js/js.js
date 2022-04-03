@@ -156,27 +156,38 @@ function setBlackBlocksToTheirOwnBlocks() {
     }
 }
 
-function setDroppableFunctionToCharacterBlocks(arr, row, index, dropRow, index2, index3) {
-    $(arr[row]).children('div').eq(index).children('div').css('z-index', 1);
-    $(arr[row]).children('div').eq(index).children('div').off('draggable')
-    $(arr[row]).children('div').eq(index).children('div').draggable();
+function setDroppableFunctionToCharacterBlocks(row, index, dropRow, index2, index3) {
+    let idOfSelected = $(boardBlocksArr[dropRow]).children('div').eq(index2).attr('id');
+    $(boardBlocksArr[row]).children('div').eq(index).children('div').css('z-index', 1);
+    $(boardBlocksArr[row]).children('div').eq(index).children('div').addClass('ui-widget-content')
 
+    $(boardBlocksArr[row]).children('div').eq(index).children('div').eq(0).off('draggable');
+    $(boardBlocksArr[row]).children('div').eq(index).children('div').eq(0).draggable();
+
+    console.log(dropRow + " = droprow")
+    console.log(index2 + " = index 2")
+    $(boardBlocksArr[dropRow]).children('div').eq(index2).off('droppable')
     $(boardBlocksArr[dropRow]).children('div').eq(index2).droppable({
         drop: function (event, ui) {
+            alert("dropped");
             console.log("is this working")
             ui.draggable.detach().appendTo($(this));
             whenClickedOnABlockEl();
-            console.log('dropped index 2')
+            ui.draggable.position({of: $(this), my: 'left top', at: 'left top'});
+            ui.draggable.draggable('option', 'revert', false);
         }
     })
 
-    $(boardBlocksArr[dropRow]).children('div').eq(index3).droppable({
+    /*$(boardBlocksArr[dropRow]).children('div').eq(index3).droppable({
         drop: function (event, ui) {
+            alert("droppeeeed");
+            console.log("is this working")
             ui.draggable.detach().appendTo($(this));
+            $(this).addClass("ui-state-highlight")
             whenClickedOnABlockEl();
             console.log('dropped index 3')
         }
-    })
+    })*/
 }
 
 
@@ -213,43 +224,80 @@ function whenClickedOnABlockEl() {
                     }
 
 
-                    if ((arr1 != 0) | (arr2 != 0)) {
-                        console.log(arr1.length);
-                        console.log(arr2.length);
-                    } else {
-                        console.log('not exists')
-                        console.log(j)
-                        if (bool == false) {
-                            setDroppableFunctionToCharacterBlocks(boardBlocksArr, i, j, i - 1, j + 1, j - 1);
-                            if (j == 0) {
-                                $(boardBlocksArr[i + 1]).children('div').eq(j + 1).css("backgroundColor", 'green');
-                                $(boardBlocksArr[i + 1]).children('div').eq(j + 1).css("opacity", 80);
-                            } else if (j == 7) {
+                    /*---------------------------------------------*/
+
+                    if (bool == false) {
+                        if (arr1 == 1 && arr2 == 1) {
+                            alert('exists both block')
+                            return;
+                        }
+
+                        setDroppableFunctionToCharacterBlocks(i, j, i + 1, j + 1, j - 1);
+
+                        if (j == 0) {
+                            $(boardBlocksArr[i + 1]).children('div').eq(j + 1).css("backgroundColor", 'green');
+                            $(boardBlocksArr[i + 1]).children('div').eq(j + 1).css("opacity", 80);
+                        } else if (j == 7) {
+                            $(boardBlocksArr[i + 1]).children('div').eq(j - 1).css("backgroundColor", 'green');
+                            $(boardBlocksArr[i + 1]).children('div').eq(j - 1).css("opacity", 80);
+                        } else {
+                            if (arr1 == 1) {
                                 $(boardBlocksArr[i + 1]).children('div').eq(j - 1).css("backgroundColor", 'green');
                                 $(boardBlocksArr[i + 1]).children('div').eq(j - 1).css("opacity", 80);
-                            } else {
+                            } else if (arr2 == 1) {
                                 $(boardBlocksArr[i + 1]).children('div').eq(j + 1).css("backgroundColor", 'green');
                                 $(boardBlocksArr[i + 1]).children('div').eq(j + 1).css("opacity", 80);
+                            } else if ((arr1 == 0) && (arr2 == 0)) {
+                                $(boardBlocksArr[i + 1]).children('div').eq(j + 1).css("backgroundColor", 'green');
+                                $(boardBlocksArr[i + 1]).children('div').eq(j + 1).css("opacity", 80);
+
                                 $(boardBlocksArr[i + 1]).children('div').eq(j - 1).css("backgroundColor", 'green');
                                 $(boardBlocksArr[i + 1]).children('div').eq(j - 1).css("opacity", 80);
                             }
+                        }
+                    } else {
+                        if ((arr1 == 1) && (arr2 == 1)) {
+                            alert('exists both block')
+                            return;
+                        }
+
+                        setDroppableFunctionToCharacterBlocks(i, j, i - 1, j + 1, j - 1);
+
+                        if (j == 0) {
+                            $(boardBlocksArr[i - 1]).children('div').eq(j + 1).css("backgroundColor", 'green');
+                            $(boardBlocksArr[i - 1]).children('div').eq(j + 1).css("opacity", 80);
+                        } else if (j == 7) {
+                            $(boardBlocksArr[i - 1]).children('div').eq(j - 1).css("backgroundColor", 'green');
+                            $(boardBlocksArr[i - 1]).children('div').eq(j - 1).css("opacity", 80);
                         } else {
-                            setDroppableFunctionToCharacterBlocks(boardBlocksArr, i, j, i + 1, j + 1, j - 1);
-                            if (j == 0) {
-                                $(boardBlocksArr[i - 1]).children('div').eq(j + 1).css("backgroundColor", 'green');
-                                $(boardBlocksArr[i - 1]).children('div').eq(j + 1).css("opacity", 80);
-                            } else if (j == 7) {
+                            console.log('if condition')
+                            if (arr1 == 1) {
                                 $(boardBlocksArr[i - 1]).children('div').eq(j - 1).css("backgroundColor", 'green');
                                 $(boardBlocksArr[i - 1]).children('div').eq(j - 1).css("opacity", 80);
-                            } else {
+                            } else if (arr2 == 1) {
+                                $(boardBlocksArr[i - 1]).children('div').eq(j + 1).css("backgroundColor", 'green');
+                                $(boardBlocksArr[i - 1]).children('div').eq(j + 1).css("opacity", 80);
+                            } else if ((arr1 == 0) && (arr2 == 0)) {
                                 $(boardBlocksArr[i - 1]).children('div').eq(j + 1).css("backgroundColor", 'green');
                                 $(boardBlocksArr[i - 1]).children('div').eq(j + 1).css("opacity", 80);
                                 $(boardBlocksArr[i - 1]).children('div').eq(j - 1).css("backgroundColor", 'green');
                                 $(boardBlocksArr[i - 1]).children('div').eq(j - 1).css("opacity", 80);
                             }
                         }
-                        return;
                     }
+
+                    /*---------------------------------------------*/
+
+
+                    // if ((arr1 != 0) || (arr2 != 0)) {
+                    //     console.log(arr1.length);
+                    //     console.log(arr2.length);
+                    //     console.log('exists')
+                    // } else {
+                    //     console.log('not exists')
+                    //     console.log(j);
+                    //     return;
+                    // }
                 }
             }
         })
