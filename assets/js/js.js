@@ -22,6 +22,7 @@ $(document).ready(function () {
                 $(div).css('width', widthOfOneDiv);
                 $(div).css('height', heightOfOneDiv);
                 $(div).css('position', 'relative');
+                $(div).attr('id', "F-" + i);
                 if (j % 2 == 0) {
                     $(div).css('backgroundColor', 'white');
                     $(row).append(div);
@@ -38,6 +39,7 @@ $(document).ready(function () {
                 $(div).css('width', widthOfOneDiv);
                 $(div).css('height', heightOfOneDiv);
                 $(div).css('position', 'relative');
+                $(div).attr('id', "S-" + i)
                 if (j % 2 == 0) {
                     $(div).css('backgroundColor', 'black');
                     $(row).append(div);
@@ -167,6 +169,7 @@ function setDroppableFunctionToCharacterBlocks(row, index, dropRow, index2, inde
 
     for (let i = 0; i < 2; i++) {
         if (i == 0) {
+            console.log("FirstOne")
             $(boardBlocksArr[dropRow]).children('div').eq(index2).off('droppable')
             $(boardBlocksArr[dropRow]).children('div').eq(index2).droppable({
 
@@ -187,6 +190,7 @@ function setDroppableFunctionToCharacterBlocks(row, index, dropRow, index2, inde
                 }
             })
         } else {
+            console.log("SecondOne")
             $(boardBlocksArr[dropRow]).children('div').eq(index3).off('droppable')
             $(boardBlocksArr[dropRow]).children('div').eq(index3).droppable({
 
@@ -264,8 +268,10 @@ function whenClickedOnABlockEl() {
                             if (j == 0) {
                                 if ($(boardBlocksArr[i + 1]).children('div').eq(j + 1).children('div').eq(0).css('backgroundColor') == 'rgb(225, 223, 219)') {
                                     arr1 = undefined;
+                                    console.log('undefined 1 ')
+                                } else {
+                                    arr1 = $(boardBlocksArr[i + 1]).children('div').eq(j + 1).children('div').length;
                                 }
-                                arr1 = $(boardBlocksArr[i + 1]).children('div').eq(j + 1).children('div').length;
                             } else if (j == 7) {
                                 if ($(boardBlocksArr[i + 1]).children('div').eq(j - 1).children('div').eq(0).css('backgroundColor') == 'rgb(225, 223, 219)') {
                                     arr2 = undefined;
@@ -318,171 +324,261 @@ function whenClickedOnABlockEl() {
                                 if ((arr1 == 1) || (arr1 == undefined)) {
                                     if (((arr1 == 1) || (arr1 == undefined)) && (arr3 == 0)) {
                                         if (arr1 == undefined) {
-                                            $(boardBlocksArr[i + 2]).children('div').eq(j + 2).css("backgroundColor", 'black');
+                                            alert('cant move')
+                                            return;
                                         } else {
                                             let checkRowBlockIndexArr = [j + 2];
                                             let arr = [[i + 2, j + 2]];
-
+                                            let checkArr = [[i + 2, j + 2]];
                                             $(boardBlocksArr[i + 2]).children('div').eq(j + 2).css("backgroundColor", 'green');
-                                            whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i + 2, checkRowBlockIndexArr, whiteScoreBoard, arr);
+                                            whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i + 2, checkRowBlockIndexArr, whiteScoreBoard, arr, checkArr);
                                             whenClickedOnABlockEl();
-                                            ifDblClickedOnACharacterBlock(i, j, i + 2, checkRowBlockIndexArr);
+                                            ifDblClickedOnACharacterBlock(i, j, i + 2, arr);
                                             return
                                         }
                                     }
                                     alert('cant drop to the block')
                                     return;
+                                } else if (arr1 == 0) {
+                                    let checkRowBlockIndexArr = [j + 1];
+                                    let arr = [[i + 1, j + 1]];
+                                    let checkArr = [[i + 1, j + 1]];
+                                    $(boardBlocksArr[i + 1]).children('div').eq(j + 1).css("backgroundColor", 'green');
+                                    whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i + 1, checkRowBlockIndexArr, whiteScoreBoard, arr, checkArr);
+                                    whenClickedOnABlockEl();
+                                    ifDblClickedOnACharacterBlock(i, j, i + 1, arr);
+                                    return
                                 }
-                                let checkRowBlockIndex = [j + 1];
-                                $(boardBlocksArr[i + 1]).children('div').eq(j + 1).css("backgroundColor", 'green');
-                                $(boardBlocksArr[i + 1]).children('div').eq(j + 1).css("opacity", 80);
-                                ifDblClickedOnACharacterBlock(i, j, i + 1, checkRowBlockIndex);
 
                             } else if (j == 7) {
                                 if ((arr2 == 1) || (arr2 == undefined)) {
 
-                                    if (((arr2 == 1) || (arr2 == undefined)) && (arr4 == 0)) {
+                                    if (((arr2 == 1) || (arr2 == undefined))) {
                                         if (arr2 == undefined) {
-                                            $(boardBlocksArr[i + 2]).children('div').eq(j - 2).css("backgroundColor", 'black');
-                                        } else {
+                                            alert('cant drop')
+                                            return;
+                                        } else if ((arr2 == 1) && (arr4 == 0)) {
                                             let checkRowBlockIndexArr = [j - 2];
                                             let arr = [[i + 2, j - 2]];
+                                            let checkArr = [[i + 2, j - 2]];
                                             $(boardBlocksArr[i + 2]).children('div').eq(j - 2).css("backgroundColor", 'green');
-                                            whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i + 2, checkRowBlockIndexArr, whiteScoreBoard, arr);
+                                            whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i + 2, checkRowBlockIndexArr, whiteScoreBoard, arr, checkArr);
                                             whenClickedOnABlockEl();
-                                            ifDblClickedOnACharacterBlock(i, j, i + 2, j - 2);
+                                            ifDblClickedOnACharacterBlock(i, j, i + 2, arr);
                                             return
+                                        } else if ((arr2 == 1) && (arr4 == 1)) {
+                                            alert('cant drop')
+                                            return;
                                         }
                                     }
-
-                                    alert('cant drop to the block')
-                                    return;
-                                } else {
+                                } else if ((arr2 == 0) && ((arr4 == 0) || (arr4 == 1) || (arr4 == undefined))) {
+                                    console.log('hhhhhhhhhhhhhhhhhhhhhhhhb')
                                     let checkRowBlockIndex = [j - 1];
                                     console.log('its index 7')
                                     $(boardBlocksArr[i + 1]).children('div').eq(j - 1).css("backgroundColor", 'green');
-                                    $(boardBlocksArr[i + 1]).children('div').eq(j - 1).css("opacity", 80);
-                                    ifDblClickedOnACharacterBlock(i, j, i + 1, checkRowBlockIndex);
+                                    let arr = [[i + 1, j - 1]]
+                                    let checkArr = [[i + 1, j - 1]]
+                                    whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i + 1, checkRowBlockIndex, whiteScoreBoard, arr, checkArr);
+                                    whenClickedOnABlockEl();
+                                    ifDblClickedOnACharacterBlock(i, j, i + 1, arr);
                                 }
+
                             } else {
 
                                 console.log('hello there1')
-
                                 if (((arr1 == 1) || (arr1 == undefined)) && (arr2 == 0)) {
-
-                                    let checkRowBlockIndexArr = [j - 1];
                                     console.log('hello there')
-                                    $(boardBlocksArr[i + 1]).children('div').eq(j - 1).css("backgroundColor", 'green');
-                                    $(boardBlocksArr[i + 1]).children('div').eq(j - 1).css("opacity", 80);
-
-                                    if ((arr3 == 0) && ((arr1 == 1) || (arr1 == undefined))) {
-                                        if (arr1 == undefined) {
-                                            $(boardBlocksArr[i + 2]).children('div').eq(j + 2).css("backgroundColor", 'black');
-                                        } else {
-                                            let checkRowBlockIndexArr = [j + 2];
-                                            let arr = [[i + 2, j + 2]];
-
-                                            $(boardBlocksArr[i + 2]).children('div').eq(j + 2).css("backgroundColor", 'green');
-                                            whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i + 2, checkRowBlockIndexArr, whiteScoreBoard, arr);
+                                    let index = $(this).parent().index();
+                                    if ($(boardBlocksArr[i + 2]).children('div').eq(j + 2).index() < index) {
+                                        if (((arr1 == undefined) || (arr1 == 1)) && (arr2 == 0)) {
+                                            let checkRowBlockIndexArr = [j - 1];
+                                            $(boardBlocksArr[i + 1]).children('div').eq(j - 1).css("backgroundColor", 'green');
+                                            let arr = [[i + 1, j - 1]]
+                                            let checkArr = [[i + 1, j - 1]];
+                                            whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i + 1, checkRowBlockIndexArr, whiteScoreBoard, arr, checkArr);
                                             whenClickedOnABlockEl();
-                                            ifDblClickedOnACharacterBlock(i, j, i + 2, checkRowBlockIndexArr);
-                                            return
+                                            ifDblClickedOnACharacterBlock(i, j, i + 1, arr);
+                                        }
+                                    } else if ($(boardBlocksArr[i + 2]).children('div').eq(j - 2).index() > index) {
+                                        if ((arr1 == undefined) && (arr2 == 0)) {
+                                            let checkRowBlockIndexArr = [j - 1];
+                                            $(boardBlocksArr[i + 1]).children('div').eq(j - 1).css("backgroundColor", 'green');
+                                            let arr = [[i + 1, j - 1]]
+                                            let checkArr = [[i + 1, j - 1]];
+                                            whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i + 1, checkRowBlockIndexArr, whiteScoreBoard, arr, checkArr);
+                                            whenClickedOnABlockEl();
+                                            ifDblClickedOnACharacterBlock(i, j, i + 1, arr);
+                                        } else if ((arr1 == 1) && (arr3 == 0)) {
+                                            let checkRowBlockIndexArr = [j - 1, j + 2];
+                                            $(boardBlocksArr[i + 1]).children('div').eq(j - 1).css("backgroundColor", 'green');
+                                            $(boardBlocksArr[i + 2]).children('div').eq(j + 2).css("backgroundColor", 'green');
+                                            let arr = [[i + 1, j - 1], [i + 2, j + 2]];
+                                            let checkArr = [[i + 2, j + 2], [i + 1, j - 1]];
+                                            whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i + 2, checkRowBlockIndexArr, whiteScoreBoard, arr, checkArr);
+                                            whenClickedOnABlockEl();
+                                            ifDblClickedOnACharacterBlock(i, j, i + 2, arr);
+                                        } else if ((arr1 == 1) && (arr3 == 1)) {
+                                            alert("cant move")
+                                            return;
+                                        }
+                                    } else if (($(boardBlocksArr[i + 2]).children('div').eq(j - 2).index() < index) && ($(boardBlocksArr[i + 2]).children('div').eq(j + 2).index() > index)) {
+                                        if ((arr1 == undefined) && (arr2 == 0)) {
+                                            let checkRowBlockIndexArr = [j - 1];
+                                            $(boardBlocksArr[i + 1]).children('div').eq(j - 1).css("backgroundColor", 'green');
+                                            let arr = [[i + 1, j - 1]]
+                                            let checkArr = [[i + 1, j - 1]];
+                                            whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i + 1, checkRowBlockIndexArr, whiteScoreBoard, arr, checkArr);
+                                            whenClickedOnABlockEl();
+                                            ifDblClickedOnACharacterBlock(i, j, i + 1, arr);
+                                        } else if ((arr1 == 1) && (arr3 == 0)) {
+                                            console.log("ektm mekaaa")
+                                            let checkRowBlockIndexArr = [j + 2, j - 1];
+                                            $(boardBlocksArr[i + 1]).children('div').eq(j - 1).css("backgroundColor", 'green');
+                                            $(boardBlocksArr[i + 2]).children('div').eq(j + 2).css("backgroundColor", 'green');
+                                            let arr = [[i + 1, j - 1], [i + 2, j + 2]]
+                                            let checkArr = [[i + 2, j + 2], [i + 1, j - 1]];
+                                            whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i + 2, checkRowBlockIndexArr, whiteScoreBoard, arr, checkArr);
+                                            whenClickedOnABlockEl();
+                                            ifDblClickedOnACharacterBlock(i, j, i + 2, arr);
+                                        } else if (((arr1 == 1) || (arr1 == undefined)) && (arr2 == 0) && (arr3 == 1) && ((arr4 == 1) || arr4 == 0)) {
+                                            let checkRowBlockIndexArr = [j - 1];
+                                            $(boardBlocksArr[i + 1]).children('div').eq(j - 1).css("backgroundColor", 'green');
+                                            let arr = [[i + 1, j - 1]]
+                                            let checkArr = [[i + 1, j - 1]];
+                                            whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i + 1, checkRowBlockIndexArr, whiteScoreBoard, arr, checkArr);
+                                            whenClickedOnABlockEl();
+                                            ifDblClickedOnACharacterBlock(i, j, i + 1, arr);
                                         }
                                     }
-                                    ifDblClickedOnACharacterBlock(i, j, i + 1, checkRowBlockIndexArr)
 
                                 } else if ((arr1 == 0) && (arr2 == 0)) {
                                     let checkRowBlockIndexArr = [j + 1, j - 1];
+                                    let arr = [[i + 1, j + 1], [i + 1, j - 1]];
+                                    let checkArr = [[i + 1, j + 1], [i + 1, j - 1]];
                                     $(boardBlocksArr[i + 1]).children('div').eq(j + 1).css("backgroundColor", 'green');
-                                    $(boardBlocksArr[i + 1]).children('div').eq(j + 1).css("opacity", 80);
-
                                     $(boardBlocksArr[i + 1]).children('div').eq(j - 1).css("backgroundColor", 'green');
-                                    $(boardBlocksArr[i + 1]).children('div').eq(j - 1).css("opacity", 80);
-                                    ifDblClickedOnACharacterBlock(i, j, i + 1, checkRowBlockIndexArr);
+                                    whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i + 1, checkRowBlockIndexArr, whiteScoreBoard, arr, checkArr);
+                                    whenClickedOnABlockEl();
+                                    ifDblClickedOnACharacterBlock(i, j, i + 1, arr);
+
 
                                 } else if (((arr1 == 1) || (arr1 == undefined)) && ((arr2 == 1) || (arr2 == undefined))) {
                                     console.log('arr1 arr2')
-                                    // if ((arr1 == undefined) && (arr2 == undefined)) {
-                                    // }
-                                    //==============================
                                     let index = $(this).parent().index();
 
                                     if ($(boardBlocksArr[i + 2]).children('div').eq(index - 2).index() > index) {
                                         if (arr3 == 0) {
                                             if (arr1 == undefined) {
-                                                $(boardBlocksArr[i + 2]).children('div').eq(j + 2).css("backgroundColor", 'black');
+                                                alert('cant drop')
+                                                return;
                                             } else {
                                                 $(boardBlocksArr[i + 2]).children('div').eq(j + 2).css("backgroundColor", 'green');
 
                                                 let checkRowBlockIndexArr = [j + 2];
                                                 let arr = [[i + 2, j + 2]];
+                                                let checkArr = [[i + 2, j + 2]];
 
-                                                whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i + 2, checkRowBlockIndexArr, whiteScoreBoard, arr);
+                                                whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i + 2, checkRowBlockIndexArr, whiteScoreBoard, arr, checkArr);
                                                 whenClickedOnABlockEl();
-                                                ifDblClickedOnACharacterBlock(i, j, i + 2, checkRowBlockIndexArr);
+                                                ifDblClickedOnACharacterBlock(i, j, i + 2, arr);
                                                 return
                                             }
-                                        } else {
-                                            alert('cant move')
                                         }
                                     } else if ($(boardBlocksArr[i + 2]).children('div').eq(index + 2).index() < index) {
                                         if (arr2 == undefined) {
-                                            $(boardBlocksArr[i + 2]).children('div').eq(j - 2).css("backgroundColor", 'black');
+                                            alert('cant drop');
+                                            return;
                                         } else {
                                             $(boardBlocksArr[i + 2]).children('div').eq(j - 2).css("backgroundColor", 'green');
-
+                                            let checkArr = [[i + 2, j - 2]];
                                             let checkRowBlockIndexArr = [j - 2];
                                             let arr = [[i + 2, j - 2]];
 
-                                            whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i + 2, checkRowBlockIndexArr, whiteScoreBoard, arr);
+                                            whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i + 2, checkRowBlockIndexArr, whiteScoreBoard, arr, checkArr);
                                             whenClickedOnABlockEl();
-                                            ifDblClickedOnACharacterBlock(i, j, i + 2, checkRowBlockIndexArr);
+                                            ifDblClickedOnACharacterBlock(i, j, i + 2, arr);
                                             return
                                         }
                                     } else if (($(boardBlocksArr[i + 2]).children('div').eq(index + 2).index() > index) && ($(boardBlocksArr[i + 2]).children('div').eq(index - 2).index() < index)) {
                                         console.log(arr1 + " = " + arr2)
+                                        console.log(arr3 + " (3 = 4) " + arr4)
                                         if ((arr3 == 0) && (arr4 == 0)) {
+                                            console.log('siriyme sra1')
                                             if ((arr1 == undefined) && (arr2 == undefined)) {
-                                                $(boardBlocksArr[i + 2]).children('div').eq(j - 2).css("backgroundColor", 'black');
-                                                $(boardBlocksArr[i + 2]).children('div').eq(j + 2).css("backgroundColor", 'black');
-                                            } else {
+                                                alert('cant drop')
+                                                return;
+                                            } else if ((arr1 == undefined) && (arr2 == 1)) {
+                                                console.log('siriyme sra2')
                                                 $(boardBlocksArr[i + 2]).children('div').eq(j - 2).css("backgroundColor", 'green');
-                                                $(boardBlocksArr[i + 2]).children('div').eq(j + 2).css("backgroundColor", 'green');
-
-                                                let checkRowBlockIndexArr = [j - 2, j + 2];
-                                                let arr = [[i + 2, j - 2], [i + 2, j - 2]];
-
-                                                whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i + 2, checkRowBlockIndexArr, whiteScoreBoard, arr);
-                                                whenClickedOnABlockEl();
-                                                ifDblClickedOnACharacterBlock(i, j, i + 2, checkRowBlockIndexArr);
-                                                return
-                                            }
-                                        } else if ((arr3 == 1) && (arr4 == 0)) {
-                                            if (arr2 == undefined) {
-                                                $(boardBlocksArr[i + 2]).children('div').eq(j - 2).css("backgroundColor", 'black');
-                                            } else {
-                                                $(boardBlocksArr[i + 2]).children('div').eq(j - 2).css("backgroundColor", 'green');
-
+                                                let checkArr = [[i + 2, j - 2]];
                                                 let checkRowBlockIndexArr = [j - 2];
                                                 let arr = [[i + 2, j - 2]];
 
-                                                whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i + 2, checkRowBlockIndexArr, whiteScoreBoard, arr);
+                                                whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i + 2, checkRowBlockIndexArr, whiteScoreBoard, arr, checkArr);
                                                 whenClickedOnABlockEl();
-                                                ifDblClickedOnACharacterBlock(i, j, i + 2, checkRowBlockIndexArr);
+                                                ifDblClickedOnACharacterBlock(i, j, i + 2, arr);
                                                 return
-                                            }
-                                        } else if ((arr4 == 1) && (arr3 == 0)) {
-                                            if (arr1 == undefined) {
-                                                $(boardBlocksArr[i + 2]).children('div').eq(j + 2).css("backgroundColor", 'black');
-                                            } else {
+                                            } else if ((arr2 == undefined) && (arr1 == 1)) {
+                                                console.log('yo yo yo o2')
                                                 $(boardBlocksArr[i + 2]).children('div').eq(j + 2).css("backgroundColor", 'green');
 
                                                 let checkRowBlockIndexArr = [j + 2];
                                                 let arr = [[i + 2, j + 2]];
-
-                                                whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i + 2, checkRowBlockIndexArr, whiteScoreBoard, arr);
+                                                let checkArr = [[i + 2, j + 2]];
+                                                whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i + 2, checkRowBlockIndexArr, whiteScoreBoard, arr, checkArr);
                                                 whenClickedOnABlockEl();
-                                                ifDblClickedOnACharacterBlock(i, j, i + 2, checkRowBlockIndexArr);
+                                                ifDblClickedOnACharacterBlock(i, j, i + 2, arr);
+                                                return
+                                            } else if ((arr2 == 1) && (arr1 == 1)) {
+                                                console.log('yo yo yo o1')
+                                                $(boardBlocksArr[i + 2]).children('div').eq(j + 2).css("backgroundColor", 'green');
+                                                $(boardBlocksArr[i + 2]).children('div').eq(j - 2).css("backgroundColor", 'green');
+                                                let checkRowBlockIndexArr = [j + 2, j - 2];
+                                                let arr = [[i + 2, j + 2], [i + 2, j - 2]];
+                                                let checkArr = [[i + 2, j + 2], [i + 2, j - 2]];
+                                                whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i + 2, checkRowBlockIndexArr, whiteScoreBoard, arr, checkArr);
+                                                whenClickedOnABlockEl();
+                                                ifDblClickedOnACharacterBlock(i, j, i + 2, arr);
+                                                return
+                                            }
+                                        } else if ((arr3 == 1) && (arr4 == 0)) {
+                                            if ((arr2 == undefined) && (arr1 == 1)) {
+                                                alert('cant drop')
+                                                return;
+                                            } else if ((arr2 == 1) && (arr1 == undefined)) {
+                                                $(boardBlocksArr[i + 2]).children('div').eq(j - 2).css("backgroundColor", 'green');
+                                                let checkArr = [[i + 2, j - 2]];
+                                                let checkRowBlockIndexArr = [j - 2];
+                                                let arr = [[i + 2, j - 2]];
+
+                                                whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i + 2, checkRowBlockIndexArr, whiteScoreBoard, arr, checkArr);
+                                                whenClickedOnABlockEl();
+                                                ifDblClickedOnACharacterBlock(i, j, i + 2, arr);
+                                                return
+                                            }
+                                        } else if ((arr4 == 1) && (arr3 == 0)) {
+                                            if ((arr2 == undefined) && (arr1 == 1)) {
+                                                $(boardBlocksArr[i + 2]).children('div').eq(j + 2).css("backgroundColor", 'green');
+
+                                                let checkRowBlockIndexArr = [j + 2];
+                                                let arr = [[i + 2, j + 2]];
+                                                let checkArr = [[i + 2, j + 2]];
+                                                whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i + 2, checkRowBlockIndexArr, whiteScoreBoard, arr, checkArr);
+                                                whenClickedOnABlockEl();
+                                                ifDblClickedOnACharacterBlock(i, j, i + 2, arr);
+                                                return
+                                            } else if ((arr2 == 1) && (arr1 == undefined)) {
+                                                alert('cant drop')
+                                                return;
+                                            } else if ((arr1 == 1) & ((arr2 == 1) || (arr2 == undefined)) & (arr3 == 0) & (arr4 == 1)) {
+                                                $(boardBlocksArr[i + 2]).children('div').eq(j + 2).css("backgroundColor", 'green');
+
+                                                let checkRowBlockIndexArr = [j + 2];
+                                                let arr = [[i + 2, j + 2]];
+                                                let checkArr = [[i + 2, j + 2]];
+                                                whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i + 2, checkRowBlockIndexArr, whiteScoreBoard, arr, checkArr);
+                                                whenClickedOnABlockEl();
+                                                ifDblClickedOnACharacterBlock(i, j, i + 2, arr);
                                                 return
                                             }
                                         }
@@ -492,69 +588,69 @@ function whenClickedOnABlockEl() {
 
                                     if ($(boardBlocksArr[i + 2]).children('div').eq(index - 2).index() > index) {
 
-                                        if (arr1 == 0) {
+                                        if ((arr1 == 0) && ((arr2 == 1) || (arr2 == undefined))) {
                                             let checkRowBlockIndexArr = [j + 1];
                                             $(boardBlocksArr[i + 1]).children('div').eq(j + 1).css("backgroundColor", 'green');
                                             let arr = [[i + 1, j + 1]];
-                                            whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i + 1, checkRowBlockIndexArr, whiteScoreBoard, arr);
+                                            let checkArr = [[i + 1, j + 1]];
+                                            whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i + 1, checkRowBlockIndexArr, whiteScoreBoard, arr, checkArr);
                                             whenClickedOnABlockEl();
-                                            ifDblClickedOnACharacterBlock(i, j, i + 1, checkRowBlockIndexArr);
+                                            ifDblClickedOnACharacterBlock(i, j, i + 1, arr);
                                             return
-                                        } else {
-                                            if (arr1 == undefined) {
-                                                $(boardBlocksArr[i + 2]).children('div').eq(j + 2).css("backgroundColor", 'black');
-                                            } else {
-                                                $(boardBlocksArr[i + 2]).children('div').eq(j + 2).css("backgroundColor", 'green');
-
-                                                let checkRowBlockIndexArr = [j + 2];
-                                                let arr = [[i + 2, j + 2]];
-
-                                                whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i + 2, checkRowBlockIndexArr, whiteScoreBoard, arr);
-                                                whenClickedOnABlockEl();
-                                                ifDblClickedOnACharacterBlock(i, j, i + 2, checkRowBlockIndexArr);
-                                                return
-                                            }
+                                        } else if ((arr1 == undefined) && ((arr2 == 1) || (arr2 == undefined))) {
+                                            alert("cant drop");
+                                            return;
+                                        } else if ((arr1 == 1) && (arr3 == 0) && ((arr2 == 1) || (arr2 == undefined))) {
+                                            let checkRowBlockIndexArr = [j + 2];
+                                            $(boardBlocksArr[i + 2]).children('div').eq(j + 2).css("backgroundColor", 'green');
+                                            let arr = [[i + 2, j + 2]];
+                                            let checkArr = [[i + 2, j + 2]];
+                                            whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i + 2, checkRowBlockIndexArr, whiteScoreBoard, arr, checkArr);
+                                            whenClickedOnABlockEl();
+                                            ifDblClickedOnACharacterBlock(i, j, i + 2, arr);
+                                            return
                                         }
-
-                                    } else if (($(boardBlocksArr[i + 2]).children('div').eq(index + 2).index() > index) && ($(boardBlocksArr[i + 2]).children('div').eq(index - 2).index() > index)) {
-                                        if (arr1 == 0) {
-                                            if (arr2 == undefined) {
-                                                $(boardBlocksArr[i + 2]).children('div').eq(j - 2).css("backgroundColor", 'black');
-                                            }
+                                    } else if (($(boardBlocksArr[i + 2]).children('div').eq(index + 2).index() > index) && ($(boardBlocksArr[i + 2]).children('div').eq(index - 2).index() < index)) {
+                                        if ((arr1 == 0) && (arr2 == 1) && ((arr3 == 0))) {
+                                            console.log("chammak challo")
+                                            let checkRowBlockIndexArr = [j - 2];
+                                            $(boardBlocksArr[i + 1]).children('div').eq(j + 1).css("backgroundColor", 'green');
+                                            $(boardBlocksArr[i + 2]).children('div').eq(j - 2).css("backgroundColor", 'green');
+                                            let arr = [[i + 1, j + 1], [i + 2, j - 2]];
+                                            let checkRowArr = [[i + 2, j - 2], [i + 1, j + 1]];
+                                            whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i + 2, checkRowBlockIndexArr, whiteScoreBoard, arr, checkRowArr);
+                                            whenClickedOnABlockEl();
+                                            ifDblClickedOnACharacterBlock(i, j, i + 2, arr);
+                                            return
+                                        } else if ((arr1 == 0) && (arr2 == undefined) && ((arr3 == 0) || (arr3 == 1) || (arr3 == undefined))) {
+                                            console.log('dumdumdum')
+                                            let checkRowBlockIndexArr = [j + 1];
                                             $(boardBlocksArr[i + 1]).children('div').eq(j + 1).css("backgroundColor", 'green');
                                             let arr = [[i + 1, j + 1]];
-                                            let checkRowBlockIndexArr = [j + 1]
-                                            whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i + 1, checkRowBlockIndexArr, whiteScoreBoard, arr);
+                                            let checkArr = [[i + 1, j + 1]];
+                                            whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i + 1, checkRowBlockIndexArr, whiteScoreBoard, arr, checkArr);
                                             whenClickedOnABlockEl();
-                                            ifDblClickedOnACharacterBlock(i, j, i + 1, checkRowBlockIndexArr);
-                                            return
-                                        } else {
-                                            if (arr1 == undefined) {
-                                                $(boardBlocksArr[i + 2]).children('div').eq(j + 2).css("backgroundColor", 'black');
-                                            } else {
-                                                $(boardBlocksArr[i + 2]).children('div').eq(j + 2).css("backgroundColor", 'green');
-
-                                                let checkRowBlockIndexArr = [j + 2];
-                                                let arr = [[i + 2, j + 2]];
-
-                                                whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i + 2, checkRowBlockIndexArr, whiteScoreBoard, arr);
-                                                whenClickedOnABlockEl();
-                                                ifDblClickedOnACharacterBlock(i, j, i + 2, checkRowBlockIndexArr);
-                                                return
-                                            }
+                                            ifDblClickedOnACharacterBlock(i, j, i + 1, arr);
+                                            return;
+                                        } else if (((arr1 == 1) || arr1 == undefined) && ((arr2 == 1) || arr2 == undefined)) {
+                                            alert("cant drop");
+                                            return;
                                         }
 
-                                    } else if ($(boardBlocksArr[i + 2]).children('div').eq(index - 2).index() < index) {
-                                        if (arr1 == 0) {
+                                    } else if ($(boardBlocksArr[i + 2]).children('div').eq(index + 2).index() < index) {
+
+                                        if ((arr1 == 0) && ((arr2 == 1) || (arr2 == undefined))) {
+                                            let checkRowBlockIndexArr = [j + 1];
                                             $(boardBlocksArr[i + 1]).children('div').eq(j + 1).css("backgroundColor", 'green');
-                                            let checkRowBlockIndexArr = [j + 1]
                                             let arr = [[i + 1, j + 1]];
-                                            whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i + 1, checkRowBlockIndexArr, whiteScoreBoard, arr);
+                                            let checkArr = [[i + 1, j + 1]];
+                                            whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i + 1, checkRowBlockIndexArr, whiteScoreBoard, arr, checkArr);
                                             whenClickedOnABlockEl();
-                                            ifDblClickedOnACharacterBlock(i, j, i + 1, checkRowBlockIndexArr);
+                                            ifDblClickedOnACharacterBlock(i, j, i + 1, arr);
                                             return
-                                        } else {
+                                        } else if (((arr1 == 1) || (arr1 == undefined)) && ((arr2 == 1) || (arr2 == undefined))) {
                                             alert('cant move')
+                                            return;
                                         }
                                     }
                                 } else if ((((arr3 == 0) || (arr3 == 1)) && (arr1 == 0) && ((arr2 == 1) || (arr2 == undefined)))) {
@@ -562,119 +658,156 @@ function whenClickedOnABlockEl() {
 
                                     if ($(boardBlocksArr[i + 2]).children('div').eq(index - 2).index() > index) {
                                         if (arr1 == undefined) {
-                                            $(boardBlocksArr[i + 1]).children('div').eq(j + 1).css("backgroundColor", 'black');
+                                            alert('cant drop')
+                                            return;
                                         } else {
                                             $(boardBlocksArr[i + 1]).children('div').eq(j + 1).css("backgroundColor", 'green');
 
                                             let checkRowBlockIndexArr = [j + 1];
                                             let arr = [[i + 1, j + 1]];
-
-                                            whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i + 2, checkRowBlockIndexArr, whiteScoreBoard, arr);
+                                            let checkArr = [[i + 1, j + 1]];
+                                            whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i + 1, checkRowBlockIndexArr, whiteScoreBoard, arr, checkArr);
                                             whenClickedOnABlockEl();
-                                            ifDblClickedOnACharacterBlock(i, j, i + 2, checkRowBlockIndexArr);
+                                            ifDblClickedOnACharacterBlock(i, j, i + 1, arr);
                                             return;
                                         }
                                     } else if (($(boardBlocksArr[i + 2]).children('div').eq(index + 2).index() > index) && ($(boardBlocksArr[i + 2]).children('div').eq(index - 2).index() < index)) {
+                                        console.log('brocode')
                                         if (arr4 == 0) {
                                             if (arr2 == undefined) {
-                                                $(boardBlocksArr[i + 2]).children('div').eq(j - 2).css("backgroundColor", 'black');
                                                 $(boardBlocksArr[i + 1]).children('div').eq(j + 1).css("backgroundColor", 'green');
-                                            } else {
-                                                $(boardBlocksArr[i + 1]).children('div').eq(j + 1).css("backgroundColor", 'green');
-                                                $(boardBlocksArr[i + 2]).children('div').eq(j - 2).css("backgroundColor", 'green');
-
-                                                let checkRowBlockIndexArr = [j - 2];
-                                                let arr = [[i + 1, j + 1], [i + 2, j - 2]];
-
-                                                whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i + 2, checkRowBlockIndexArr, whiteScoreBoard, arr);
+                                                let checkRowBlockIndexArr = [j + 1];
+                                                let arr = [[i + 1, j + 1]];
+                                                let checkArr = [[i + 1, j + 1]];
+                                                whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i + 1, checkRowBlockIndexArr, whiteScoreBoard, arr, checkArr);
                                                 whenClickedOnABlockEl();
-                                                ifDblClickedOnACharacterBlock(i, j, i + 2, checkRowBlockIndexArr);
+                                                ifDblClickedOnACharacterBlock(i, j, i + 1, arr);
+                                                return;
+                                            } else if ((arr1 == 0) && (arr2 == 1) && ((arr3 == 0) || (arr3 == 1))) {
+                                                console.log('ullai ullai uuuuuuuuuuuuuuuuuuuu')
+                                                $(boardBlocksArr[i + 2]).children('div').eq(j - 2).css("backgroundColor", 'green');
+                                                $(boardBlocksArr[i + 1]).children('div').eq(j + 1).css("backgroundColor", 'green');
+                                                let checkRowBlockIndexArr = [j - 2, j + 1];
+                                                let arr = [[i + 2, j - 2], [i + 1, j + 1]];
+                                                let checkRow = [[i + 2, j - 2], [i + 1, j + 1]]
+                                                whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i + 2, checkRowBlockIndexArr, whiteScoreBoard, arr, checkRow);
+                                                whenClickedOnABlockEl();
+                                                ifDblClickedOnACharacterBlock(i, j, i + 2, arr);
                                                 return
                                             }
-                                        } else {
+                                        } else if ((arr1 == 0) & ((arr2 == undefined || (arr2 == 1))) && (arr4 == 1)) {
+                                            console.log('ullai ullai uuuuuuuuuuuuuuuuuuuuq1')
+                                            $(boardBlocksArr[i + 1]).children('div').eq(j + 1).css("backgroundColor", 'green');
+                                            let checkRowBlockIndexArr = [j + 1];
+                                            let arr = [[i + 1, j + 1]];
+                                            let checkRow = [[i + 1, j + 1]]
+                                            whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i + 1, checkRowBlockIndexArr, whiteScoreBoard, arr, checkRow);
+                                            whenClickedOnABlockEl();
+                                            ifDblClickedOnACharacterBlock(i, j, i + 1, arr);
+                                            return
+                                        }
+
+                                    } else if ($(boardBlocksArr[i + 2]).children('div').eq(index + 2).index() < index) {
+                                        if ((arr1 == 0) && (arr2 == undefined) && ((arr4 == 1) || (arr4 == 0) || (arr4 == undefined))) {
                                             $(boardBlocksArr[i + 1]).children('div').eq(j + 1).css("backgroundColor", 'green');
 
                                             let checkRowBlockIndexArr = [j + 1];
                                             let arr = [[i + 1, j + 1]];
+                                            let checkArr = [[i + 1, j + 1]];
 
-                                            whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i + 1, checkRowBlockIndexArr, whiteScoreBoard, arr);
+                                            whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i + 1, checkRowBlockIndexArr, whiteScoreBoard, arr, checkArr);
                                             whenClickedOnABlockEl();
-                                            ifDblClickedOnACharacterBlock(i, j, i + 1, checkRowBlockIndexArr);
+                                            ifDblClickedOnACharacterBlock(i, j, i + 1, arr);
                                             return
-                                        }
+                                        } else if ((arr1 == 0) && (arr2 == 1) && (arr4 == 0)) {
+                                            $(boardBlocksArr[i + 1]).children('div').eq(j + 1).css("backgroundColor", 'green');
+                                            $(boardBlocksArr[i + 2]).children('div').eq(j - 2).css("backgroundColor", 'green');
+                                            let checkRowBlockIndexArr = [j + 1, j - 2];
+                                            let arr = [[i + 2, j - 2], [i + 1, j + 1]];
+                                            let checkArr = [[i + 2, j - 2], [i + 1, j + 1]];
 
-                                    } else if ($(boardBlocksArr[i + 2]).children('div').eq(index - 2).index() < index) {
-                                        if (arr4 == 0) {
-                                            if (arr2 == undefined) {
-                                                $(boardBlocksArr[i + 2]).children('div').eq(j - 2).css("backgroundColor", 'black');
-                                                $(boardBlocksArr[i + 1]).children('div').eq(j + 1).css("backgroundColor", 'green');
-                                            } else {
-                                                $(boardBlocksArr[i + 1]).children('div').eq(j + 1).css("backgroundColor", 'green');
-                                                $(boardBlocksArr[i + 2]).children('div').eq(j - 2).css("backgroundColor", 'green');
-
-                                                let checkRowBlockIndexArr = [j - 2];
-                                                let arr = [[i + 1, j + 1], [i + 2, j - 2]];
-
-                                                whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i + 2, checkRowBlockIndexArr, whiteScoreBoard, arr);
-                                                whenClickedOnABlockEl();
-                                                ifDblClickedOnACharacterBlock(i, j, i + 2, checkRowBlockIndexArr);
-                                                return
-                                            }
-                                        } else {
+                                            whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i + 2, checkRowBlockIndexArr, whiteScoreBoard, arr, checkArr);
+                                            whenClickedOnABlockEl();
+                                            ifDblClickedOnACharacterBlock(i, j, i + 2, arr);
+                                            return
+                                        } else if ((arr1 == 0) && (arr2 == 1) && (arr4 == 1)) {
                                             $(boardBlocksArr[i + 1]).children('div').eq(j + 1).css("backgroundColor", 'green');
 
-                                            let checkRowBlockIndexArr = [j - 2];
+                                            let checkRowBlockIndexArr = [j + 1];
                                             let arr = [[i + 1, j + 1]];
+                                            let checkArr = [[i + 1, j + 1]];
 
-                                            whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i + 2, checkRowBlockIndexArr, whiteScoreBoard, arr);
+                                            whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i + 1, checkRowBlockIndexArr, whiteScoreBoard, arr, checkArr);
                                             whenClickedOnABlockEl();
-                                            ifDblClickedOnACharacterBlock(i, j, i + 2, checkRowBlockIndexArr);
+                                            ifDblClickedOnACharacterBlock(i, j, i + 1, arr);
                                             return
                                         }
                                     }
                                 } else if ((((arr3 == 0) || (arr3 == 1)) && ((arr1 == 1) || (arr1 == undefined)) && (arr2 == 0))) {
+                                    console.log("kkkkkkkkkkkkkkkkkk")
                                     let index = $(this).parent().index();
 
                                     if ($(boardBlocksArr[i + 2]).children('div').eq(index - 2).index() > index) {
-
-                                        $(boardBlocksArr[i + 1]).children('div').eq(j - 1).css("backgroundColor", 'green');
-
-                                        let checkRowBlockIndexArr = [j - 1];
-                                        let arr = [[i + 1, j - 1]];
-
-                                        whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i + 1, checkRowBlockIndexArr, whiteScoreBoard, arr);
-                                        whenClickedOnABlockEl();
-                                        ifDblClickedOnACharacterBlock(i, j, i + 1, checkRowBlockIndexArr);
-                                        return
-
-
+                                        if ((arr2 == 0) && (arr1 == 1) && (arr3 == 0)) {
+                                            $(boardBlocksArr[i + 1]).children('div').eq(j - 1).css("backgroundColor", 'green');
+                                            $(boardBlocksArr[i + 2]).children('div').eq(j + 2).css("backgroundColor", 'green');
+                                            let checkRowBlockIndexArr = [j + 1, j + 2];
+                                            let arr = [[i + 2, j + 2], [i + 1, j - 1]];
+                                            let checkArr = [[i + 2, j + 2], [i + 1, j - 1]]
+                                            whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i + 2, checkRowBlockIndexArr, whiteScoreBoard, arr, checkArr);
+                                            whenClickedOnABlockEl();
+                                            ifDblClickedOnACharacterBlock(i, j, i + 2, arr);
+                                            return
+                                        } else if ((arr2 == 0) && ((arr1 == 1) || (arr1 == undefined)) && (arr3 == 1)) {
+                                            $(boardBlocksArr[i + 1]).children('div').eq(j - 1).css("backgroundColor", 'green');
+                                            let checkRowBlockIndexArr = [j - 1];
+                                            let arr = [[i + 1, j - 1]];
+                                            let checkArr = [[i + 1, j - 1]]
+                                            whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i + 1, checkRowBlockIndexArr, whiteScoreBoard, arr, checkArr);
+                                            whenClickedOnABlockEl();
+                                            ifDblClickedOnACharacterBlock(i, j, i + 1, arr);
+                                            return
+                                        }
                                     } else if (($(boardBlocksArr[i + 2]).children('div').eq(index + 2).index() > index) && ($(boardBlocksArr[i + 2]).children('div').eq(index - 2).index() > index)) {
+                                        console.log("ko oyaa")
                                         if (arr3 == 0) {
                                             if (arr1 == undefined) {
-                                                $(boardBlocksArr[i + 2]).children('div').eq(j + 2).css("backgroundColor", 'black');
-                                            } else {
+                                                alert('cant drop')
+                                                return;
+                                            } else if (arr1 == 1) {
                                                 $(boardBlocksArr[i + 2]).children('div').eq(j + 2).css("backgroundColor", 'green');
-
-                                                let checkRowBlockIndexArr = [j + 2];
-                                                let arr = [[i + 2, j + 2]];
-
-                                                whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i + 2, checkRowBlockIndexArr, whiteScoreBoard, arr);
+                                                (boardBlocksArr[i + 1]).children('div').eq(j - 1).css("backgroundColor", 'green');
+                                                let checkRowBlockIndexArr = [j + 2, j - 1];
+                                                let arr = [[i + 2, j + 2], [i + 1, j - 1]];
+                                                let checkArr = [[i + 2, j + 2], [i + 1, j - 1]];
+                                                whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i + 2, checkRowBlockIndexArr, whiteScoreBoard, arr, checkArr);
                                                 whenClickedOnABlockEl();
-                                                ifDblClickedOnACharacterBlock(i, j, i + 2, checkRowBlockIndexArr);
+                                                ifDblClickedOnACharacterBlock(i, j, i + 2, arr);
                                                 return
                                             }
                                         } else {
                                             $(boardBlocksArr[i + 1]).children('div').eq(j - 1).css("backgroundColor", 'green');
-
+                                            console.log('nannaane nannanee nannanne')
                                             let checkRowBlockIndexArr = [j - 1];
                                             let arr = [[i + 1, j - 1]];
-
-                                            whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i + 1, checkRowBlockIndexArr, whiteScoreBoard, arr);
+                                            let checkArr = [[i + 1, j - 1]];
+                                            whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i + 1, checkRowBlockIndexArr, whiteScoreBoard, arr, checkArr);
                                             whenClickedOnABlockEl();
-                                            ifDblClickedOnACharacterBlock(i, j, i + 1, checkRowBlockIndexArr);
+                                            ifDblClickedOnACharacterBlock(i, j, i + 1, arr);
                                             return
                                         }
 
+                                    } else if ($(boardBlocksArr[i + 2]).children('div').eq(index + 2).index() < index) {
+                                        if ((arr2 == 0) && ((arr1 == 1) || (arr1 == undefined)) && ((arr3 == 0) || (arr3 == 1))) {
+                                            $(boardBlocksArr[i + 1]).children('div').eq(j - 1).css("backgroundColor", 'green');
+                                            let checkRowBlockIndexArr = [j - 1];
+                                            let arr = [[i + 1, j - 1]];
+                                            let checkArr = [[i + 1, j - 1]]
+                                            whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i + 1, checkRowBlockIndexArr, whiteScoreBoard, arr, checkArr);
+                                            whenClickedOnABlockEl();
+                                            ifDblClickedOnACharacterBlock(i, j, i + 1, arr);
+                                            return
+                                        }
                                     }
                                 }
                             }
@@ -694,237 +827,325 @@ function whenClickedOnABlockEl() {
 
                                     if (((arr1 == 1) || (arr1 == undefined)) && (arr3 == 0)) {
                                         if (arr1 == undefined) {
-                                            $(boardBlocksArr[i - 2]).children('div').eq(j + 2).css("backgroundColor", 'black');
+                                            alert('cant drop to the block')
+                                            return;
                                         } else {
-
+                                            if (arr3 == 0) {
+                                                console.log('ko oya khhed dn')
+                                                let checkRowBlockIndexArr = [j + 2];
+                                                let arr = [[i - 2, j + 2]];
+                                                let checkArr = [[i - 2, j + 2]]
+                                                $(boardBlocksArr[i - 2]).children('div').eq(j + 2).css("backgroundColor", 'green');
+                                                whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i - 2, checkRowBlockIndexArr, blackScoreBoard, arr, checkArr);
+                                                whenClickedOnABlockEl();
+                                                ifDblClickedOnACharacterBlock(i, j, i - 2, arr);
+                                            }
                                         }
+                                    } else if ((arr1 == 1) && (arr3 == 1)) {
+                                        alert('cant drop');
+                                        return;
                                     }
-                                    alert('cant drop to the block')
-                                    return;
+                                } else if (arr1 == 0) {
+                                    let checkRowBlockIndexArr = [j + 1];
+                                    let arr = [[i - 1, j + 1]];
+                                    let checkArr = [[i - 1, j + 1]];
+                                    $(boardBlocksArr[i - 1]).children('div').eq(j + 1).css("backgroundColor", 'green');
+                                    whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i - 1, checkRowBlockIndexArr, blackScoreBoard, arr, checkArr);
+                                    whenClickedOnABlockEl();
+                                    ifDblClickedOnACharacterBlock(i, j, i - 1, arr);
                                 }
-                                let checkRowBlockIndex = [j + 1];
-                                $(boardBlocksArr[i - 1]).children('div').eq(j + 1).css("backgroundColor", 'green');
-                                $(boardBlocksArr[i - 1]).children('div').eq(j + 1).css("opacity", 80);
-                                ifDblClickedOnACharacterBlock(i, j, i - 1, checkRowBlockIndex);
 
                             } else if (j == 7) {
                                 console.log('bkack')
-                                if (arr2 == 1) {
-
-                                    if (((arr2 == 1) || (arr2 == undefined)) && (arr4 == 0)) {
-                                        if (arr2 == undefined) {
-                                            $(boardBlocksArr[i - 2]).children('div').eq(j - 2).css("backgroundColor", 'black');
-                                        } else {
-                                            let checkRowBlockIndexArr = [j - 2];
-                                            let arr = [[i - 2, j - 2]];
-                                            $(boardBlocksArr[i - 2]).children('div').eq(j - 2).css("backgroundColor", 'green');
-                                            whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i - 2, checkRowBlockIndexArr, blackScoreBoard, arr);
-                                            whenClickedOnABlockEl();
-                                            ifDblClickedOnACharacterBlock(i, j, i - 2, j - 2);
-                                            return
-                                        }
-                                    }
-
-                                    alert('cant drop to the block')
+                                if ((arr2 == undefined)) {
+                                    alert('cant move')
                                     return;
-                                } else {
-                                    let checkRowBlockIndex = [j - 1];
+                                } else if (arr2 == 0) {
+                                    let checkRowBlockIndexArr = [j - 1];
+                                    let arr = [[i - 1, j - 1]];
+                                    let checkArr = [[i - 1, j - 1]];
                                     console.log('its index 7')
                                     $(boardBlocksArr[i - 1]).children('div').eq(j - 1).css("backgroundColor", 'green');
-                                    $(boardBlocksArr[i - 1]).children('div').eq(j - 1).css("opacity", 80);
-                                    ifDblClickedOnACharacterBlock(i, j, i - 1, checkRowBlockIndex);
+                                    whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i - 1, checkRowBlockIndexArr, blackScoreBoard, arr, checkArr);
+                                    whenClickedOnABlockEl();
+                                    ifDblClickedOnACharacterBlock(i, j, i - 1, arr);
+                                } else if ((arr2 == 1) && (arr4 == 0)) {
+                                    let checkRowBlockIndexArr = [j - 2];
+                                    let arr = [[i - 2, j - 2]];
+                                    let checkArr = [[i - 2, j - 2]];
+                                    console.log('its index 7')
+                                    $(boardBlocksArr[i - 2]).children('div').eq(j - 2).css("backgroundColor", 'green');
+                                    whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i - 2, checkRowBlockIndexArr, blackScoreBoard, arr, checkArr);
+                                    whenClickedOnABlockEl();
+                                    ifDblClickedOnACharacterBlock(i, j, i - 2, arr);
                                 }
                             } else {
-
-                                console.log('hello there1')
+                                console.log('hello blacks')
 
                                 if (((arr1 == 1) || (arr1 == undefined)) && (arr2 == 0)) {
-                                    let checkRowBlockIndexArr = [j - 1];
                                     console.log('hello there')
-                                    $(boardBlocksArr[i - 1]).children('div').eq(j - 1).css("backgroundColor", 'green');
-                                    $(boardBlocksArr[i - 1]).children('div').eq(j - 1).css("opacity", 80);
-
-                                    if ((arr3 == 0) && ((arr1 == 1) || (arr1 == undefined))) {
-                                        if (arr1 == undefined) {
-                                            $(boardBlocksArr[i - 2]).children('div').eq(j + 2).css("backgroundColor", 'black');
-                                        } else {
-                                            let checkRowBlockIndexArr = [j + 2];
-                                            let arr = [[i - 2, j + 2]];
-
-                                            $(boardBlocksArr[i - 2]).children('div').eq(j + 2).css("backgroundColor", 'green');
-                                            whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i - 2, checkRowBlockIndexArr, blackScoreBoard, arr);
+                                    let index = $(this).parent().index();
+                                    if ($(boardBlocksArr[i - 2]).children('div').eq(j + 2).index() < index) {
+                                        if (((arr1 == undefined) || (arr1 == 1)) && (arr2 == 0)) {
+                                            let checkRowBlockIndexArr = [j - 1];
+                                            $(boardBlocksArr[i - 1]).children('div').eq(j - 1).css("backgroundColor", 'green');
+                                            let arr = [[i - 1, j - 1]]
+                                            let checkArr = [[i - 1, j - 1]];
+                                            whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i - 1, checkRowBlockIndexArr, blackScoreBoard, arr, checkArr);
                                             whenClickedOnABlockEl();
-                                            ifDblClickedOnACharacterBlock(i, j, i - 2, checkRowBlockIndexArr);
-                                            return
+                                            ifDblClickedOnACharacterBlock(i, j, i - 1, arr);
+                                        }
+                                    } else if ($(boardBlocksArr[i - 2]).children('div').eq(j - 2).index() > index) {
+                                        if ((arr1 == undefined) && (arr2 == 0)) {
+                                            let checkRowBlockIndexArr = [j - 1];
+                                            $(boardBlocksArr[i - 1]).children('div').eq(j - 1).css("backgroundColor", 'green');
+                                            let arr = [[i - 1, j - 1]]
+                                            let checkArr = [[i - 1, j - 1]];
+                                            whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i - 1, checkRowBlockIndexArr, blackScoreBoard, arr, checkArr);
+                                            whenClickedOnABlockEl();
+                                            ifDblClickedOnACharacterBlock(i, j, i - 1, arr);
+                                        } else if ((arr1 == 1) && (arr3 == 0)) {
+                                            let checkRowBlockIndexArr = [j - 1, j + 2];
+                                            $(boardBlocksArr[i - 1]).children('div').eq(j - 1).css("backgroundColor", 'green');
+                                            $(boardBlocksArr[i - 2]).children('div').eq(j + 2).css("backgroundColor", 'green');
+                                            let arr = [[i - 1, j - 1], [i - 2, j + 2]];
+                                            let checkArr = [[i - 2, j + 2], [i - 1, j - 1]];
+                                            whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i - 2, checkRowBlockIndexArr, blackScoreBoard, arr, checkArr);
+                                            whenClickedOnABlockEl();
+                                            ifDblClickedOnACharacterBlock(i, j, i - 2, arr);
+                                        } else if ((arr1 == 1) && (arr3 == 1)) {
+                                            alert("cant move")
+                                            return;
+                                        }
+                                    } else if (($(boardBlocksArr[i - 2]).children('div').eq(j - 2).index() < index) && ($(boardBlocksArr[i - 2]).children('div').eq(j + 2).index() > index)) {
+                                        if ((arr1 == undefined) && (arr2 == 0)) {
+                                            let checkRowBlockIndexArr = [j - 1];
+                                            $(boardBlocksArr[i - 1]).children('div').eq(j - 1).css("backgroundColor", 'green');
+                                            let arr = [[i - 1, j - 1]]
+                                            let checkArr = [[i - 1, j - 1]];
+                                            whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i - 1, checkRowBlockIndexArr, blackScoreBoard, arr, checkArr);
+                                            whenClickedOnABlockEl();
+                                            ifDblClickedOnACharacterBlock(i, j, i - 1, arr);
+                                        } else if ((arr1 == 1) && (arr3 == 0)) {
+                                            console.log("ektm mekaaa")
+                                            let checkRowBlockIndexArr = [j + 2, j - 1];
+                                            $(boardBlocksArr[i - 1]).children('div').eq(j - 1).css("backgroundColor", 'green');
+                                            $(boardBlocksArr[i - 2]).children('div').eq(j + 2).css("backgroundColor", 'green');
+                                            let arr = [[i - 1, j - 1], [i - 2, j + 2]]
+                                            let checkArr = [[i - 2, j + 2], [i - 1, j - 1]];
+                                            whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i - 2, checkRowBlockIndexArr, blackScoreBoard, arr, checkArr);
+                                            whenClickedOnABlockEl();
+                                            ifDblClickedOnACharacterBlock(i, j, i - 2, arr);
+                                        } else if (((arr1 == 1) || (arr1 == undefined)) && (arr2 == 0) && (arr3 == 1) && ((arr4 == 1) || arr4 == 0)) {
+                                            let checkRowBlockIndexArr = [j - 1];
+                                            $(boardBlocksArr[i - 1]).children('div').eq(j - 1).css("backgroundColor", 'green');
+                                            let arr = [[i - 1, j - 1]]
+                                            let checkArr = [[i - 1, j - 1]];
+                                            whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i - 1, checkRowBlockIndexArr, blackScoreBoard, arr, checkArr);
+                                            whenClickedOnABlockEl();
+                                            ifDblClickedOnACharacterBlock(i, j, i - 1, arr);
                                         }
                                     }
-                                    ifDblClickedOnACharacterBlock(i, j, i - 1, checkRowBlockIndexArr)
 
                                 } else if ((arr1 == 0) && (arr2 == 0)) {
                                     let checkRowBlockIndexArr = [j + 1, j - 1];
+                                    let arr = [[i - 1, j + 1], [i - 1, j - 1]];
+                                    let checkArr = [[i - 1, j + 1], [i - 1, j - 1]];
                                     $(boardBlocksArr[i - 1]).children('div').eq(j + 1).css("backgroundColor", 'green');
-                                    $(boardBlocksArr[i - 1]).children('div').eq(j + 1).css("opacity", 80);
-
                                     $(boardBlocksArr[i - 1]).children('div').eq(j - 1).css("backgroundColor", 'green');
-                                    $(boardBlocksArr[i - 1]).children('div').eq(j - 1).css("opacity", 80);
-                                    ifDblClickedOnACharacterBlock(i, j, i - 1, checkRowBlockIndexArr);
+                                    whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i - 1, checkRowBlockIndexArr, blackScoreBoard, arr, checkArr);
+                                    whenClickedOnABlockEl();
+                                    ifDblClickedOnACharacterBlock(i, j, i - 1, arr);
+
 
                                 } else if (((arr1 == 1) || (arr1 == undefined)) && ((arr2 == 1) || (arr2 == undefined))) {
                                     console.log('arr1 arr2')
-                                    //==============================
                                     let index = $(this).parent().index();
-                                    // if ((arr1 == undefined) && (arr2 == undefined)) {
-                                    //
-                                    // }
 
                                     if ($(boardBlocksArr[i - 2]).children('div').eq(index - 2).index() > index) {
                                         if (arr3 == 0) {
                                             if (arr1 == undefined) {
-                                                $(boardBlocksArr[i - 2]).children('div').eq(j + 2).css("backgroundColor", 'black');
+                                                alert('cant drop')
+                                                return;
                                             } else {
                                                 $(boardBlocksArr[i - 2]).children('div').eq(j + 2).css("backgroundColor", 'green');
 
                                                 let checkRowBlockIndexArr = [j + 2];
                                                 let arr = [[i - 2, j + 2]];
+                                                let checkArr = [[i - 2, j + 2]];
 
-                                                whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i - 2, checkRowBlockIndexArr, blackScoreBoard, arr);
+                                                whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i - 2, checkRowBlockIndexArr, blackScoreBoard, arr, checkArr);
                                                 whenClickedOnABlockEl();
-                                                ifDblClickedOnACharacterBlock(i, j, i - 2, checkRowBlockIndexArr);
+                                                ifDblClickedOnACharacterBlock(i, j, i - 2, arr);
                                                 return
                                             }
-                                        } else {
-                                            alert('cant move')
                                         }
                                     } else if ($(boardBlocksArr[i - 2]).children('div').eq(index + 2).index() < index) {
                                         if (arr2 == undefined) {
-                                            $(boardBlocksArr[i - 2]).children('div').eq(j - 2).css("backgroundColor", 'black');
+                                            alert('cant drop');
+                                            return;
                                         } else {
                                             $(boardBlocksArr[i - 2]).children('div').eq(j - 2).css("backgroundColor", 'green');
-
+                                            let checkArr = [[i - 2, j - 2]];
                                             let checkRowBlockIndexArr = [j - 2];
                                             let arr = [[i - 2, j - 2]];
 
-                                            whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i - 2, checkRowBlockIndexArr, blackScoreBoard, arr);
+                                            whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i - 2, checkRowBlockIndexArr, blackScoreBoard, arr, checkArr);
                                             whenClickedOnABlockEl();
-                                            ifDblClickedOnACharacterBlock(i, j, i - 2, checkRowBlockIndexArr);
+                                            ifDblClickedOnACharacterBlock(i, j, i - 2, arr);
                                             return
                                         }
-                                    } else if (($(boardBlocksArr[i - 2]).children('div').eq(index + 2).index() > index) && ($(boardBlocksArr[i + 2]).children('div').eq(index - 2).index() < index)) {
+                                    } else if (($(boardBlocksArr[i - 2]).children('div').eq(index + 2).index() > index) && ($(boardBlocksArr[i - 2]).children('div').eq(index - 2).index() < index)) {
+                                        console.log(arr1 + " = " + arr2)
+                                        console.log(arr3 + " (3 = 4) " + arr4)
                                         if ((arr3 == 0) && (arr4 == 0)) {
+                                            console.log('siriyme sra1')
                                             if ((arr1 == undefined) && (arr2 == undefined)) {
-                                                $(boardBlocksArr[i - 2]).children('div').eq(j - 2).css("backgroundColor", 'black');
-                                                $(boardBlocksArr[i - 2]).children('div').eq(j + 2).css("backgroundColor", 'black');
-                                            } else {
+                                                alert('cant drop')
+                                                return;
+                                            } else if ((arr1 == undefined) && (arr2 == 1)) {
+                                                console.log('siriyme sra2')
                                                 $(boardBlocksArr[i - 2]).children('div').eq(j - 2).css("backgroundColor", 'green');
-                                                $(boardBlocksArr[i - 2]).children('div').eq(j + 2).css("backgroundColor", 'green');
-
-                                                let checkRowBlockIndexArr = [j - 2, j + 2];
-                                                let arr = [[i - 2, j - 2], [i - 2, j - 2]];
-
-                                                whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i - 2, checkRowBlockIndexArr, blackScoreBoard, arr);
-                                                whenClickedOnABlockEl();
-                                                ifDblClickedOnACharacterBlock(i, j, i - 2, checkRowBlockIndexArr);
-                                                return
-                                            }
-                                        } else if ((arr3 == 1) && (arr4 == 0)) {
-                                            if (arr2 == undefined) {
-                                                $(boardBlocksArr[i - 2]).children('div').eq(j - 2).css("backgroundColor", 'black');
-                                            } else {
-                                                $(boardBlocksArr[i - 2]).children('div').eq(j - 2).css("backgroundColor", 'green');
-
+                                                let checkArr = [[i - 2, j - 2]];
                                                 let checkRowBlockIndexArr = [j - 2];
                                                 let arr = [[i - 2, j - 2]];
 
-                                                whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i - 2, checkRowBlockIndexArr, blackScoreBoard, arr);
+                                                whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i - 2, checkRowBlockIndexArr, blackScoreBoard, arr, checkArr);
                                                 whenClickedOnABlockEl();
-                                                ifDblClickedOnACharacterBlock(i, j, i - 2, checkRowBlockIndexArr);
+                                                ifDblClickedOnACharacterBlock(i, j, i - 2, arr);
                                                 return
-                                            }
-                                        } else if ((arr4 == 1) && (arr3 == 0)) {
-                                            if (arr1 == undefined) {
-                                                $(boardBlocksArr[i - 2]).children('div').eq(j + 2).css("backgroundColor", 'black');
-                                            } else {
+                                            } else if ((arr2 == undefined) && (arr1 == 1)) {
+                                                console.log('yo yo yo o')
                                                 $(boardBlocksArr[i - 2]).children('div').eq(j + 2).css("backgroundColor", 'green');
 
                                                 let checkRowBlockIndexArr = [j + 2];
                                                 let arr = [[i - 2, j + 2]];
-
-                                                whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i - 2, checkRowBlockIndexArr, blackScoreBoard, arr);
+                                                let checkArr = [[i - 2, j + 2]];
+                                                whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i - 2, checkRowBlockIndexArr, blackScoreBoard, arr, checkArr);
                                                 whenClickedOnABlockEl();
-                                                ifDblClickedOnACharacterBlock(i, j, i - 2, checkRowBlockIndexArr);
+                                                ifDblClickedOnACharacterBlock(i, j, i - 2, arr);
+                                                return
+                                            } else if ((arr2 == 1) && (arr1 == 1)) {
+                                                console.log('yo yo yo o1')
+                                                $(boardBlocksArr[i - 2]).children('div').eq(j + 2).css("backgroundColor", 'green');
+                                                $(boardBlocksArr[i - 2]).children('div').eq(j - 2).css("backgroundColor", 'green');
+                                                let checkRowBlockIndexArr = [j + 2, j - 2];
+                                                let arr = [[i - 2, j + 2], [i - 2, j - 2]];
+                                                let checkArr = [[i - 2, j + 2], [i - 2, j - 2]];
+                                                whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i - 2, checkRowBlockIndexArr, blackScoreBoard, arr, checkArr);
+                                                whenClickedOnABlockEl();
+                                                ifDblClickedOnACharacterBlock(i, j, i - 2, arr);
+                                                return
+                                            }
+                                        } else if ((arr3 == 1) && (arr4 == 0)) {
+                                            if ((arr2 == undefined) && (arr1 == 1)) {
+                                                alert('cant drop')
+                                                return;
+                                            } else if ((arr2 == 1) && (arr1 == undefined)) {
+                                                $(boardBlocksArr[i - 2]).children('div').eq(j - 2).css("backgroundColor", 'green');
+                                                let checkArr = [[i - 2, j - 2]];
+                                                let checkRowBlockIndexArr = [j - 2];
+                                                let arr = [[i - 2, j - 2]];
+
+                                                whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i - 2, checkRowBlockIndexArr, blackScoreBoard, arr, checkArr);
+                                                whenClickedOnABlockEl();
+                                                ifDblClickedOnACharacterBlock(i, j, i - 2, arr);
+                                                return
+                                            }
+                                        } else if ((arr4 == 1) && (arr3 == 0)) {
+                                            if ((arr2 == undefined) && (arr1 == 1)) {
+                                                $(boardBlocksArr[i - 2]).children('div').eq(j + 2).css("backgroundColor", 'green');
+
+                                                let checkRowBlockIndexArr = [j + 2];
+                                                let arr = [[i - 2, j + 2]];
+                                                let checkArr = [[i - 2, j + 2]];
+                                                whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i - 2, checkRowBlockIndexArr, blackScoreBoard, arr, checkArr);
+                                                whenClickedOnABlockEl();
+                                                ifDblClickedOnACharacterBlock(i, j, i - 2, arr);
+                                                return
+                                            } else if ((arr2 == 1) && (arr1 == undefined)) {
+                                                alert('cant drop')
+                                                return;
+                                            } else if ((arr1 == 1) & ((arr2 == 1) || (arr2 == undefined)) & (arr3 == 0) & (arr4 == 1)) {
+                                                $(boardBlocksArr[i - 2]).children('div').eq(j + 2).css("backgroundColor", 'green');
+
+                                                let checkRowBlockIndexArr = [j + 2];
+                                                let arr = [[i - 2, j + 2]];
+                                                let checkArr = [[i - 2, j + 2]];
+                                                whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i - 2, checkRowBlockIndexArr, whiteScoreBoard, arr, checkArr);
+                                                whenClickedOnABlockEl();
+                                                ifDblClickedOnACharacterBlock(i, j, i - 2, arr);
                                                 return
                                             }
                                         }
                                     }
-                                } else if ((arr3 == 0) && ((arr1 == 1) || (arr1 == 0) || (arr1 == undefined)) && (arr4 == 1) && ((arr2 == 1) || arr2 == undefined)) {
+                                } else if ((arr3 == 0) && ((arr1 == 1) || (arr1 == 0) || (arr1 == undefined)) && (arr4 == 1) && ((arr2 == 1) || (arr2 == undefined))) {
                                     let index = $(this).parent().index();
 
                                     if ($(boardBlocksArr[i - 2]).children('div').eq(index - 2).index() > index) {
 
-                                        if (arr1 == 0) {
+                                        if ((arr1 == 0) && ((arr2 == 1) || (arr2 == undefined))) {
                                             let checkRowBlockIndexArr = [j + 1];
                                             $(boardBlocksArr[i - 1]).children('div').eq(j + 1).css("backgroundColor", 'green');
                                             let arr = [[i - 1, j + 1]];
-                                            whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i - 1, checkRowBlockIndexArr, blackScoreBoard, arr);
+                                            let checkArr = [[i - 1, j + 1]];
+                                            whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i - 1, checkRowBlockIndexArr, blackScoreBoard, arr, checkArr);
                                             whenClickedOnABlockEl();
-                                            ifDblClickedOnACharacterBlock(i, j, i - 1, checkRowBlockIndexArr);
+                                            ifDblClickedOnACharacterBlock(i, j, i - 1, arr);
                                             return
-                                        } else {
-                                            if (arr1 == undefined) {
-                                                $(boardBlocksArr[i - 2]).children('div').eq(j + 2).css("backgroundColor", 'black');
-                                            } else {
-                                                $(boardBlocksArr[i - 2]).children('div').eq(j + 2).css("backgroundColor", 'green');
-
-                                                let checkRowBlockIndexArr = [j + 2];
-                                                let arr = [[i - 2, j + 2]];
-
-                                                whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i - 2, checkRowBlockIndexArr, blackScoreBoard, arr);
-                                                whenClickedOnABlockEl();
-                                                ifDblClickedOnACharacterBlock(i, j, i - 2, checkRowBlockIndexArr);
-                                                return
-                                            }
+                                        } else if ((arr1 == undefined) && ((arr2 == 1) || (arr2 == undefined))) {
+                                            alert("cant drop");
+                                            return;
+                                        } else if ((arr1 == 1) && (arr3 == 0) && ((arr2 == 1) || (arr2 == undefined))) {
+                                            let checkRowBlockIndexArr = [j + 2];
+                                            $(boardBlocksArr[i - 2]).children('div').eq(j + 2).css("backgroundColor", 'green');
+                                            let arr = [[i - 2, j + 2]];
+                                            let checkArr = [[i - 2, j + 2]];
+                                            whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i - 2, checkRowBlockIndexArr, blackScoreBoard, arr, checkArr);
+                                            whenClickedOnABlockEl();
+                                            ifDblClickedOnACharacterBlock(i, j, i - 2, arr);
+                                            return
                                         }
-
-                                    } else if (($(boardBlocksArr[i - 2]).children('div').eq(index + 2).index() > index) && ($(boardBlocksArr[i + 2]).children('div').eq(index - 2).index() > index)) {
-                                        if (arr1 == 0) {
-                                            if (arr2 == undefined) {
-                                                $(boardBlocksArr[i - 2]).children('div').eq(j - 2).css("backgroundColor", 'black');
-                                            }
+                                    } else if (($(boardBlocksArr[i - 2]).children('div').eq(index + 2).index() > index) && ($(boardBlocksArr[i - 2]).children('div').eq(index - 2).index() < index)) {
+                                        if ((arr1 == 0) && (arr2 == 1)) {
+                                            console.log("chammak challo")
+                                            let checkRowBlockIndexArr = [j - 2];
+                                            $(boardBlocksArr[i - 1]).children('div').eq(j + 1).css("backgroundColor", 'green');
+                                            $(boardBlocksArr[i - 2]).children('div').eq(j - 2).css("backgroundColor", 'green');
+                                            let arr = [[i - 1, j + 1], [i - 2, j - 2]];
+                                            let checkRowArr = [[i - 2, j - 2], [i - 1, j + 1]];
+                                            whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i - 2, checkRowBlockIndexArr, blackScoreBoard, arr, checkRowArr);
+                                            whenClickedOnABlockEl();
+                                            ifDblClickedOnACharacterBlock(i, j, i - 2, arr);
+                                            return
+                                        } else if ((arr1 == 0) && (arr2 == undefined) && ((arr3 == 0) || (arr3 == 1) || (arr3 == undefined))) {
+                                            let checkRowBlockIndexArr = [j - 2];
                                             $(boardBlocksArr[i - 1]).children('div').eq(j + 1).css("backgroundColor", 'green');
                                             let arr = [[i - 1, j + 1]];
-                                            let checkRowBlockIndexArr = [j + 1]
-                                            whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i - 1, checkRowBlockIndexArr, blackScoreBoard, arr);
+                                            let checkArr = [[i - 1, j + 1]];
+                                            whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i - 1, checkRowBlockIndexArr, blackScoreBoard, arr, checkArr);
                                             whenClickedOnABlockEl();
-                                            ifDblClickedOnACharacterBlock(i, j, i - 1, checkRowBlockIndexArr);
-                                            return
-                                        } else {
-                                            if (arr1 == undefined) {
-                                                $(boardBlocksArr[i - 2]).children('div').eq(j + 2).css("backgroundColor", 'black');
-                                            } else {
-                                                $(boardBlocksArr[i - 2]).children('div').eq(j + 2).css("backgroundColor", 'green');
-
-                                                let checkRowBlockIndexArr = [j + 2];
-                                                let arr = [[i - 2, j + 2]];
-
-                                                whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i - 2, checkRowBlockIndexArr, blackScoreBoard, arr);
-                                                whenClickedOnABlockEl();
-                                                ifDblClickedOnACharacterBlock(i, j, i - 2, checkRowBlockIndexArr);
-                                                return
-                                            }
+                                            ifDblClickedOnACharacterBlock(i, j, i - 1, arr);
+                                            return;
+                                        } else if (((arr1 == 1) || arr1 == undefined) && ((arr2 == 1) || arr2 == undefined)) {
+                                            alert("cant drop");
+                                            return;
                                         }
 
-                                    } else if ($(boardBlocksArr[i - 2]).children('div').eq(index - 2).index() < index) {
-                                        if (arr1 == 0) {
-                                            $(boardBlocksArr[i - 1]).children('div').eq(j + 1).css("backgroundColor", 'green');
-                                            let checkRowBlockIndexArr = [j + 1]
-                                            let arr = [[i - 1, j + 1]];
-                                            whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i - 1, checkRowBlockIndexArr, blackScoreBoard, arr);
-                                            whenClickedOnABlockEl();
-                                            ifDblClickedOnACharacterBlock(i, j, i - 1, checkRowBlockIndexArr);
-                                            return
+                                    } else if ($(boardBlocksArr[i - 2]).children('div').eq(index + 2).index() < index) {
 
-                                        } else {
+                                        if ((arr1 == 0) && ((arr2 == 1) || (arr2 == undefined))) {
+                                            let checkRowBlockIndexArr = [j + 1];
+                                            $(boardBlocksArr[i - 1]).children('div').eq(j + 1).css("backgroundColor", 'green');
+                                            let arr = [[i - 1, j + 1]];
+                                            let checkArr = [[i - 1, j + 1]];
+                                            whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i - 1, checkRowBlockIndexArr, blackScoreBoard, arr, checkArr);
+                                            whenClickedOnABlockEl();
+                                            ifDblClickedOnACharacterBlock(i, j, i - 1, arr);
+                                            return
+                                        } else if (((arr1 == 1) || (arr1 == undefined)) && ((arr2 == 1) || (arr2 == undefined))) {
                                             alert('cant move')
+                                            return;
                                         }
                                     }
                                 } else if ((((arr3 == 0) || (arr3 == 1)) && (arr1 == 0) && ((arr2 == 1) || (arr2 == undefined)))) {
@@ -932,105 +1153,130 @@ function whenClickedOnABlockEl() {
 
                                     if ($(boardBlocksArr[i - 2]).children('div').eq(index - 2).index() > index) {
                                         if (arr1 == undefined) {
-                                            $(boardBlocksArr[i - 1]).children('div').eq(j + 1).css("backgroundColor", 'black');
+                                            alert('cant drop')
+                                            return;
                                         } else {
                                             $(boardBlocksArr[i - 1]).children('div').eq(j + 1).css("backgroundColor", 'green');
 
                                             let checkRowBlockIndexArr = [j + 1];
                                             let arr = [[i - 1, j + 1]];
-
-                                            whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i - 2, checkRowBlockIndexArr, blackScoreBoard, arr);
+                                            let checkArr = [[i - 1, j + 1]];
+                                            whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i - 1, checkRowBlockIndexArr, blackScoreBoard, arr, checkArr);
                                             whenClickedOnABlockEl();
-                                            ifDblClickedOnACharacterBlock(i, j, i - 2, checkRowBlockIndexArr);
-                                            return
+                                            ifDblClickedOnACharacterBlock(i, j, i - 1, arr);
+                                            return;
                                         }
-                                    } else if (($(boardBlocksArr[i - 2]).children('div').eq(index + 2).index() > index) && ($(boardBlocksArr[i + 2]).children('div').eq(index - 2).index() > index)) {
+                                    } else if (($(boardBlocksArr[i - 2]).children('div').eq(index + 2).index() > index) && ($(boardBlocksArr[i - 2]).children('div').eq(index - 2).index() < index)) {
                                         if (arr4 == 0) {
                                             if (arr2 == undefined) {
                                                 $(boardBlocksArr[i - 1]).children('div').eq(j + 1).css("backgroundColor", 'green');
-                                                $(boardBlocksArr[i - 2]).children('div').eq(j - 2).css("backgroundColor", 'black');
-                                            } else {
-                                                $(boardBlocksArr[i - 1]).children('div').eq(j + 1).css("backgroundColor", 'green');
-                                                $(boardBlocksArr[i - 2]).children('div').eq(j - 2).css("backgroundColor", 'green');
-
-                                                let checkRowBlockIndexArr = [j - 2];
-                                                let arr = [[i - 1, j + 1], [i - 2, j - 2]];
-
-                                                whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i - 2, checkRowBlockIndexArr, blackScoreBoard, arr);
+                                                let checkRowBlockIndexArr = [j + 1];
+                                                let arr = [[i - 1, j + 1]];
+                                                let checkArr = [[i - 1, j + 1]];
+                                                whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i - 1, checkRowBlockIndexArr, blackScoreBoard, arr, checkArr);
                                                 whenClickedOnABlockEl();
-                                                ifDblClickedOnACharacterBlock(i, j, i - 2, checkRowBlockIndexArr);
+                                                ifDblClickedOnACharacterBlock(i, j, i - 1, arr);
+                                                return;
+                                            } else if ((arr1 == 0) && (arr2 == 1) && ((arr3 == 0) || (arr3 == 1))) {
+                                                console.log('ullai ullai uuuuuuuuuuuuuuuuuuuu')
+                                                $(boardBlocksArr[i - 2]).children('div').eq(j - 2).css("backgroundColor", 'green');
+                                                $(boardBlocksArr[i - 1]).children('div').eq(j + 1).css("backgroundColor", 'green');
+                                                let checkRowBlockIndexArr = [j - 2, j + 1];
+                                                let arr = [[i - 2, j - 2], [i - 1, j + 1]];
+                                                let checkRow = [[i - 2, j - 2], [i - 1, j + 1]]
+                                                whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i - 2, checkRowBlockIndexArr, blackScoreBoard, arr, checkRow);
+                                                whenClickedOnABlockEl();
+                                                ifDblClickedOnACharacterBlock(i, j, i - 2, arr);
                                                 return
                                             }
-                                        } else {
+                                        } else if ((arr1 == 0) & ((arr2 == undefined || (arr2 == 1))) && (arr4 == 1)) {
+                                            console.log('ullai ullai uuuuuuuuuuuuuuuuuuuuq1')
                                             $(boardBlocksArr[i - 1]).children('div').eq(j + 1).css("backgroundColor", 'green');
-
-                                            let checkRowBlockIndexArr = [j - 2];
+                                            let checkRowBlockIndexArr = [j + 1];
                                             let arr = [[i - 1, j + 1]];
-
-                                            whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i - 2, checkRowBlockIndexArr, blackScoreBoard, arr);
+                                            let checkRow = [[i - 1, j + 1]]
+                                            whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i - 1, checkRowBlockIndexArr, blackScoreBoard, arr, checkRow);
                                             whenClickedOnABlockEl();
-                                            ifDblClickedOnACharacterBlock(i, j, i - 2, checkRowBlockIndexArr);
+                                            ifDblClickedOnACharacterBlock(i, j, i - 1, arr);
                                             return
                                         }
 
-                                    } else if ($(boardBlocksArr[i - 2]).children('div').eq(index - 2).index() < index) {
-                                        if (arr4 == 0) {
-                                            if (arr2 == undefined) {
-                                                $(boardBlocksArr[i - 1]).children('div').eq(j + 1).css("backgroundColor", 'green');
-                                                $(boardBlocksArr[i - 2]).children('div').eq(j - 2).css("backgroundColor", 'black');
-                                            } else {
-                                                $(boardBlocksArr[i - 1]).children('div').eq(j + 1).css("backgroundColor", 'green');
-                                                $(boardBlocksArr[i - 2]).children('div').eq(j - 2).css("backgroundColor", 'green');
-
-                                                let checkRowBlockIndexArr = [j - 2];
-                                                let arr = [[i - 1, j + 1], [i - 2, j - 2]];
-
-                                                whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i - 2, checkRowBlockIndexArr, blackScoreBoard, arr);
-                                                whenClickedOnABlockEl();
-                                                ifDblClickedOnACharacterBlock(i, j, i - 2, checkRowBlockIndexArr);
-                                                return
-                                            }
-                                        } else {
+                                    } else if ($(boardBlocksArr[i - 2]).children('div').eq(index + 2).index() < index) {
+                                        if ((arr1 == 0) && (arr2 == undefined) && ((arr4 == 1) || (arr4 == 0) || (arr4 == undefined))) {
                                             $(boardBlocksArr[i - 1]).children('div').eq(j + 1).css("backgroundColor", 'green');
 
-                                            let checkRowBlockIndexArr = [j - 2];
+                                            let checkRowBlockIndexArr = [j + 1];
                                             let arr = [[i - 1, j + 1]];
+                                            let checkArr = [[i - 1, j + 1]];
 
-                                            whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i - 2, checkRowBlockIndexArr, blackScoreBoard, arr);
+                                            whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i - 1, checkRowBlockIndexArr, blackScoreBoard, arr, checkArr);
                                             whenClickedOnABlockEl();
-                                            ifDblClickedOnACharacterBlock(i, j, i - 2, checkRowBlockIndexArr);
+                                            ifDblClickedOnACharacterBlock(i, j, i - 1, arr);
+                                            return
+                                        } else if ((arr1 == 0) && (arr2 == 1) && (arr4 == 0)) {
+                                            $(boardBlocksArr[i - 1]).children('div').eq(j + 1).css("backgroundColor", 'green');
+                                            $(boardBlocksArr[i - 2]).children('div').eq(j - 2).css("backgroundColor", 'green');
+                                            let checkRowBlockIndexArr = [j + 1, j - 2];
+                                            let arr = [[i - 2, j - 2], [i - 1, j + 1]];
+                                            let checkArr = [[i - 2, j - 2], [i - 1, j + 1]];
+
+                                            whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i - 2, checkRowBlockIndexArr, blackScoreBoard, arr, checkArr);
+                                            whenClickedOnABlockEl();
+                                            ifDblClickedOnACharacterBlock(i, j, i - 2, arr);
+                                            return
+                                        } else if ((arr1 == 0) && (arr2 == 1) && (arr4 == 1)) {
+                                            $(boardBlocksArr[i - 1]).children('div').eq(j + 1).css("backgroundColor", 'green');
+
+                                            let checkRowBlockIndexArr = [j + 1];
+                                            let arr = [[i - 1, j + 1]];
+                                            let checkArr = [[i - 1, j + 1]];
+
+                                            whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i - 1, checkRowBlockIndexArr, blackScoreBoard, arr, checkArr);
+                                            whenClickedOnABlockEl();
+                                            ifDblClickedOnACharacterBlock(i, j, i - 1, arr);
                                             return
                                         }
                                     }
                                 } else if ((((arr3 == 0) || (arr3 == 1)) && ((arr1 == 1) || (arr1 == undefined)) && (arr2 == 0))) {
+                                    console.log("kkkkkkkkkkkkkkkkkk")
                                     let index = $(this).parent().index();
 
                                     if ($(boardBlocksArr[i - 2]).children('div').eq(index - 2).index() > index) {
-
-                                        $(boardBlocksArr[i - 1]).children('div').eq(j - 1).css("backgroundColor", 'green');
-
-                                        let checkRowBlockIndexArr = [j - 1];
-                                        let arr = [[i - 1, j - 1]];
-
-                                        whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i - 1, checkRowBlockIndexArr, blackScoreBoard, arr);
-                                        whenClickedOnABlockEl();
-                                        ifDblClickedOnACharacterBlock(i, j, i - 1, checkRowBlockIndexArr);
-                                        return
-
-
-                                    } else if (($(boardBlocksArr[i - 2]).children('div').eq(index + 2).index() > index) && ($(boardBlocksArr[i + 2]).children('div').eq(index - 2).index() > index)) {
+                                        if ((arr2 == 0) && (arr1 == 1) && (arr3 == 0)) {
+                                            $(boardBlocksArr[i - 1]).children('div').eq(j - 1).css("backgroundColor", 'green');
+                                            $(boardBlocksArr[i - 2]).children('div').eq(j + 2).css("backgroundColor", 'green');
+                                            let checkRowBlockIndexArr = [j - 1, j + 2];
+                                            let arr = [[i - 2, j + 2], [i - 1, j - 1]];
+                                            let checkArr = [[i - 2, j + 2], [i - 1, j - 1]]
+                                            whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i - 2, checkRowBlockIndexArr, blackScoreBoard, arr, checkArr);
+                                            whenClickedOnABlockEl();
+                                            ifDblClickedOnACharacterBlock(i, j, i - 2, arr);
+                                            return
+                                        } else if ((arr2 == 0) && ((arr1 == 1) || (arr1 == undefined)) && (arr3 == 1)) {
+                                            $(boardBlocksArr[i - 1]).children('div').eq(j - 1).css("backgroundColor", 'green');
+                                            let checkRowBlockIndexArr = [j - 1];
+                                            let arr = [[i - 1, j - 1]];
+                                            let checkArr = [[i - 1, j - 1]]
+                                            whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i - 1, checkRowBlockIndexArr, blackScoreBoard, arr, checkArr);
+                                            whenClickedOnABlockEl();
+                                            ifDblClickedOnACharacterBlock(i, j, i - 1, arr);
+                                            return
+                                        }
+                                    } else if (($(boardBlocksArr[i - 2]).children('div').eq(index + 2).index() > index) && ($(boardBlocksArr[i - 2]).children('div').eq(index - 2).index() > index)) {
+                                        console.log("ko oyaa")
                                         if (arr3 == 0) {
                                             if (arr1 == undefined) {
-                                                $(boardBlocksArr[i - 2]).children('div').eq(j + 2).css("backgroundColor", 'black');
-                                            } else {
+                                                alert('cant drop')
+                                                return;
+                                            } else if (arr1 == 1) {
                                                 $(boardBlocksArr[i - 2]).children('div').eq(j + 2).css("backgroundColor", 'green');
-
-                                                let checkRowBlockIndexArr = [j + 2];
-                                                let arr = [[i - 2, j + 2]];
-
-                                                whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i - 2, checkRowBlockIndexArr, blackScoreBoard, arr);
+                                                (boardBlocksArr[i - 1]).children('div').eq(j - 1).css("backgroundColor", 'green');
+                                                let checkRowBlockIndexArr = [j + 2, j - 1];
+                                                let arr = [[i - 2, j + 2], [i - 1, j - 1]];
+                                                let checkArr = [[i - 2, j + 2], [i - 1, j - 1]];
+                                                whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i - 2, checkRowBlockIndexArr, blackScoreBoard, arr, checkArr);
                                                 whenClickedOnABlockEl();
-                                                ifDblClickedOnACharacterBlock(i, j, i - 2, checkRowBlockIndexArr);
+                                                ifDblClickedOnACharacterBlock(i, j, i - 2, arr);
                                                 return
                                             }
                                         } else {
@@ -1038,13 +1284,24 @@ function whenClickedOnABlockEl() {
 
                                             let checkRowBlockIndexArr = [j - 1];
                                             let arr = [[i - 1, j - 1]];
-
-                                            whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i - 1, checkRowBlockIndexArr, blackScoreBoard, arr);
+                                            let checkArr = [[i - 1, j - 1]];
+                                            whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i - 1, checkRowBlockIndexArr, blackScoreBoard, arr, checkArr);
                                             whenClickedOnABlockEl();
-                                            ifDblClickedOnACharacterBlock(i, j, i - 1, checkRowBlockIndexArr);
+                                            ifDblClickedOnACharacterBlock(i, j, i - 1, arr);
                                             return
                                         }
 
+                                    } else if ($(boardBlocksArr[i - 2]).children('div').eq(index + 2).index() < index) {
+                                        if ((arr2 == 0) && ((arr1 == 1) || (arr1 == undefined)) && ((arr3 == 0) || (arr3 == 1))) {
+                                            $(boardBlocksArr[i - 1]).children('div').eq(j - 1).css("backgroundColor", 'green');
+                                            let checkRowBlockIndexArr = [j - 1];
+                                            let arr = [[i - 1, j - 1]];
+                                            let checkArr = [[i - 1, j - 1]]
+                                            whenAChanceToMakeABlockToCutOfAnotherBlock(i, j, i - 1, checkRowBlockIndexArr, blackScoreBoard, arr, checkArr);
+                                            whenClickedOnABlockEl();
+                                            ifDblClickedOnACharacterBlock(i, j, i - 1, arr);
+                                            return
+                                        }
                                     }
                                 }
                             }
@@ -1068,9 +1325,61 @@ function checkIfSelectedCharacterExistsInBlackBlockArray(selectedBlock) {
     return false;
 }
 
-function whenAChanceToMakeABlockToCutOfAnotherBlock(crntRow, crntRowBlockIndex, checkRow, checkRowBlockIndexArr, scoreBoard, arrayForColorRemoving) {
+function whenAChanceToMakeABlockToCutOfAnotherBlock(crntRow, crntRowBlockIndex, checkRow, checkRowBlockIndexArr, scoreBoard, arrayForColorRemoving, checkArr) {
+
+    console.log('mek wdad')
+    $(boardBlocksArr[crntRow]).children('div').eq(crntRowBlockIndex).children('div').css('z-index', 1);
+    $(boardBlocksArr[crntRow]).children('div').eq(crntRowBlockIndex).children('div').eq(0).draggable();
+    var arr = checkArr;
+    for (let k = 0; k < 8; k++) {
+        console.log(arrayForColorRemoving.length + "arrrararrararar lenenenewghth")
+        /*console.log('this is row index block - ' + checkRowBlockIndexArr[i])*/
+        for (let j = 0; j < 8; j++) {
+            $(boardBlocksArr[j]).children('div').eq(k).droppable({
+                    drop: function (event, ui) {
+                        console.log("jjjjjjjjjjjjjjjj - " + j)
+                        console.log("kkkkkkkkkkkkkkkk - " + k)
+                        console.log(arr.length + " - arr.length")
+                        let lengthOfArr = arr[0].length;
+                        if (arr.length == 1) {
+                            callMeToMakeACharacterCusOff(crntRow, crntRowBlockIndex, checkRow, checkRowBlockIndexArr, scoreBoard, arrayForColorRemoving);
+                        } else {
+                            if (lengthOfArr > 1) {
+                                if (arr[0][0] == arr[1][0]) {
+                                    callMeToMakeACharacterCusOff(crntRow, crntRowBlockIndex, checkRow, checkRowBlockIndexArr, scoreBoard, arrayForColorRemoving);
+                                } else {
+                                    if ($(boardBlocksArr[j]).children('div').eq(k).attr('id') == $(boardBlocksArr[arr[0][0]]).children('div').eq(arr[0][1]).attr('id')) {
+                                        console.log('check done id same = ======================================================')
+                                        callMeToMakeACharacterCusOff(crntRow, crntRowBlockIndex, checkRow, checkRowBlockIndexArr, scoreBoard, arrayForColorRemoving);
+                                    } else {
+                                        console.log('its me[[[[[[[[[[[[[[[[[[[[[]]]]]]]]]]]]]]]]]]]]]]]')
+                                        $(boardBlocksArr[arr[1][0]]).children('div').eq(arr[1][1]).droppable({
+                                            drop: function (event, ui) {
+                                                alert("Do you want to move");
+                                                console.log("shiihihhihi1")
+                                                ui.draggable.css('position', 'absolute');
+                                                ui.draggable.css('left', 0);
+                                                ui.draggable.css('top', 0);
+                                                $(this).append($(boardBlocksArr[crntRow]).children('div').eq(crntRowBlockIndex).children('div'));
+                                                clearAllSuggestedBlocks(arrayForColorRemoving)
+                                            }
+                                        })
+                                    }
+                                }
+                            } else {
+                                callMeToMakeACharacterCusOff(crntRow, crntRowBlockIndex, checkRow, checkRowBlockIndexArr, scoreBoard, arrayForColorRemoving);
+                            }
+                        }
+                    }
+                }
+            )
+        }
+    }
+}
+
+function callMeToMakeACharacterCusOff(crntRow, crntRowBlockIndex, checkRow, checkRowBlockIndexArr, scoreBoard, arrayForColorRemoving) {
+    console.log('run unaaaaa')
     for (let i = 0; i < checkRowBlockIndexArr.length; i++) {
-        console.log('this is row index block - ' + checkRowBlockIndexArr[i])
         $(boardBlocksArr[crntRow]).children('div').eq(crntRowBlockIndex).children('div').css('z-index', 1);
         $(boardBlocksArr[crntRow]).children('div').eq(crntRowBlockIndex).children('div').eq(0).draggable();
         $(boardBlocksArr[checkRow]).children('div').eq(checkRowBlockIndexArr[i]).droppable({
@@ -1132,28 +1441,30 @@ function whenAChanceToMakeABlockToCutOfAnotherBlock(crntRow, crntRowBlockIndex, 
             }
         })
     }
-
 }
 
 function clearAllSuggestedBlocks(arr) {
+    console.log(arr.length + " = color array ek length ek")
     for (let i = 0; i < arr.length; i++) {
         $(boardBlocksArr[arr[i][0]]).children('div').eq(arr[i][1]).css('backgroundColor', 'black');
     }
 }
 
 function ifDblClickedOnACharacterBlock(crntRow, crntRowBlockIndex, checkRow, arr) {
+    $(boardBlocksArr[crntRow]).children('div').eq(crntRowBlockIndex).children('div').eq(0).off('dblclick');
     $(boardBlocksArr[crntRow]).children('div').eq(crntRowBlockIndex).children('div').eq(0).dblclick(function () {
+        console.log(arr.length + " = = == ")
         for (let i = 0; i < arr.length; i++) {
-            $(boardBlocksArr[checkRow]).children('div').eq(arr[i]).css('backgroundColor', 'black')
+            $(boardBlocksArr[arr[i][0]]).children('div').eq(arr[i][1]).css('backgroundColor', 'black')
         }
     })
 }
 
 
 function informWhetherBlacksOrWhitesWon(scoreboard) {
-    let scoreBoardBlocks = $(scoreboard).children('div:nth-child(1)').children('.secondRow');
+    let scoreBoardBlocks = scoreboard
     if ($(scoreBoardBlocks).children('div').eq(11).children('div').length == 1) {
-        if ($(scoreboard).attr('id') == 'whiteScoreBoard') {
+        if ($(scoreboard).attr('id') == 'whitesScoreBoard') {
             if (confirm('Game is Over..White Team Wins') == true) {
                 $(document).reload();
             }
@@ -1163,5 +1474,4 @@ function informWhetherBlacksOrWhitesWon(scoreboard) {
             }
         }
     }
-
 }

@@ -1,33 +1,33 @@
-body>main>section {
+body > main > section {
     width: 100vw;
     height: 100vh;
     background-color: rgb(230, 230, 230);
 }
 
-body>main>section .scoreBoard {
+body > main > section .scoreBoard {
     width: 80%;
     height: 80%;
     inset: 0 0 0 0;
     margin: auto;
 }
 
-body>main>section .scoreBoard>div:nth-child(1) {
+body > main > section .scoreBoard > div:nth-child(1) {
     width: 100%;
     height: 100%;
 }
 
-body>main>section .scoreBoard>div:nth-child(1)>.row {
-    height: calc(100%/2);
+body > main > section .scoreBoard > div:nth-child(1) > .row {
+    height: calc(100% / 2);
     border: 1px solid black;
 }
 
-body>main>section .scoreBoard>div:nth-child(1)>.row div .firstRow {
+body > main > section .scoreBoard > div:nth-child(1) > .row div .firstRow {
     width: 100%;
     height: 20%;
     background-color: rgb(156, 160, 160);
 }
 
-body>main>section .scoreBoard>div:nth-child(1)>.row div .secondRow {
+body > main > section .scoreBoard > div:nth-child(1) > .row div .secondRow {
     top: 20%;
     display: flex;
     flex-direction: row;
@@ -37,20 +37,20 @@ body>main>section .scoreBoard>div:nth-child(1)>.row div .secondRow {
     background-color: rgb(206, 199, 199);
 }
 
-body>main>section .scoreBoard>div:nth-child(1)>.row div .secondRow div {
+body > main > section .scoreBoard > div:nth-child(1) > .row div .secondRow div {
     position: relative;
-    width: calc(100%/4);
-    height: calc(100%/4);
+    width: calc(100% / 4);
+    height: calc(100% / 3);
     border: 1px solid rgb(0, 0, 0);
 }
 
-body>main>section>.firstRow {
+body > main > section > .firstRow {
     position: absolute;
     width: 100%;
     height: 100%;
 }
 
-body>main>section .boardContainer>.board {
+body > main > section .boardContainer > .board {
     position: absolute;
     inset: 0 0 0 0;
     margin: auto;
