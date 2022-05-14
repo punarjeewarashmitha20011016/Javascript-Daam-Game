@@ -372,7 +372,6 @@ function whenClickedOnABlockEl() {
                                         }
                                     }
                                 } else if ((arr2 == 0) && ((arr4 == 0) || (arr4 == 1) || (arr4 == undefined))) {
-                                    console.log('hhhhhhhhhhhhhhhhhhhhhhhhb')
                                     let checkRowBlockIndex = [j - 1];
                                     console.log('its index 7')
                                     $(boardBlocksArr[i + 1]).children('div').eq(j - 1).css("backgroundColor", 'green');
@@ -431,7 +430,6 @@ function whenClickedOnABlockEl() {
                                             whenClickedOnABlockEl();
                                             ifDblClickedOnACharacterBlock(i, j, i + 1, arr);
                                         } else if ((arr1 == 1) && (arr3 == 0)) {
-                                            console.log("ektm mekaaa")
                                             let checkRowBlockIndexArr = [j + 2, j - 1];
                                             $(boardBlocksArr[i + 1]).children('div').eq(j - 1).css("backgroundColor", 'green');
                                             $(boardBlocksArr[i + 2]).children('div').eq(j + 2).css("backgroundColor", 'green');
@@ -503,12 +501,10 @@ function whenClickedOnABlockEl() {
                                         console.log(arr1 + " = " + arr2)
                                         console.log(arr3 + " (3 = 4) " + arr4)
                                         if ((arr3 == 0) && (arr4 == 0)) {
-                                            console.log('siriyme sra1')
                                             if ((arr1 == undefined) && (arr2 == undefined)) {
                                                 alert('cant drop')
                                                 return;
                                             } else if ((arr1 == undefined) && (arr2 == 1)) {
-                                                console.log('siriyme sra2')
                                                 $(boardBlocksArr[i + 2]).children('div').eq(j - 2).css("backgroundColor", 'green');
                                                 let checkArr = [[i + 2, j - 2]];
                                                 let checkRowBlockIndexArr = [j - 2];
@@ -519,7 +515,6 @@ function whenClickedOnABlockEl() {
                                                 ifDblClickedOnACharacterBlock(i, j, i + 2, arr);
                                                 return
                                             } else if ((arr2 == undefined) && (arr1 == 1)) {
-                                                console.log('yo yo yo o2')
                                                 $(boardBlocksArr[i + 2]).children('div').eq(j + 2).css("backgroundColor", 'green');
 
                                                 let checkRowBlockIndexArr = [j + 2];
@@ -530,7 +525,6 @@ function whenClickedOnABlockEl() {
                                                 ifDblClickedOnACharacterBlock(i, j, i + 2, arr);
                                                 return
                                             } else if ((arr2 == 1) && (arr1 == 1)) {
-                                                console.log('yo yo yo o1')
                                                 $(boardBlocksArr[i + 2]).children('div').eq(j + 2).css("backgroundColor", 'green');
                                                 $(boardBlocksArr[i + 2]).children('div').eq(j - 2).css("backgroundColor", 'green');
                                                 let checkRowBlockIndexArr = [j + 2, j - 2];
@@ -612,7 +606,6 @@ function whenClickedOnABlockEl() {
                                         }
                                     } else if (($(boardBlocksArr[i + 2]).children('div').eq(index + 2).index() > index) && ($(boardBlocksArr[i + 2]).children('div').eq(index - 2).index() < index)) {
                                         if ((arr1 == 0) && (arr2 == 1) && ((arr3 == 0))) {
-                                            console.log("chammak challo")
                                             let checkRowBlockIndexArr = [j - 2];
                                             $(boardBlocksArr[i + 1]).children('div').eq(j + 1).css("backgroundColor", 'green');
                                             $(boardBlocksArr[i + 2]).children('div').eq(j - 2).css("backgroundColor", 'green');
@@ -623,7 +616,6 @@ function whenClickedOnABlockEl() {
                                             ifDblClickedOnACharacterBlock(i, j, i + 2, arr);
                                             return
                                         } else if ((arr1 == 0) && (arr2 == undefined) && ((arr3 == 0) || (arr3 == 1) || (arr3 == undefined))) {
-                                            console.log('dumdumdum')
                                             let checkRowBlockIndexArr = [j + 1];
                                             $(boardBlocksArr[i + 1]).children('div').eq(j + 1).css("backgroundColor", 'green');
                                             let arr = [[i + 1, j + 1]];
@@ -672,7 +664,6 @@ function whenClickedOnABlockEl() {
                                             return;
                                         }
                                     } else if (($(boardBlocksArr[i + 2]).children('div').eq(index + 2).index() > index) && ($(boardBlocksArr[i + 2]).children('div').eq(index - 2).index() < index)) {
-                                        console.log('brocode')
                                         if (arr4 == 0) {
                                             if (arr2 == undefined) {
                                                 $(boardBlocksArr[i + 1]).children('div').eq(j + 1).css("backgroundColor", 'green');
@@ -684,7 +675,6 @@ function whenClickedOnABlockEl() {
                                                 ifDblClickedOnACharacterBlock(i, j, i + 1, arr);
                                                 return;
                                             } else if ((arr1 == 0) && (arr2 == 1) && ((arr3 == 0) || (arr3 == 1))) {
-                                                console.log('ullai ullai uuuuuuuuuuuuuuuuuuuu')
                                                 $(boardBlocksArr[i + 2]).children('div').eq(j - 2).css("backgroundColor", 'green');
                                                 $(boardBlocksArr[i + 1]).children('div').eq(j + 1).css("backgroundColor", 'green');
                                                 let checkRowBlockIndexArr = [j - 2, j + 1];
@@ -696,7 +686,6 @@ function whenClickedOnABlockEl() {
                                                 return
                                             }
                                         } else if ((arr1 == 0) & ((arr2 == undefined || (arr2 == 1))) && (arr4 == 1)) {
-                                            console.log('ullai ullai uuuuuuuuuuuuuuuuuuuuq1')
                                             $(boardBlocksArr[i + 1]).children('div').eq(j + 1).css("backgroundColor", 'green');
                                             let checkRowBlockIndexArr = [j + 1];
                                             let arr = [[i + 1, j + 1]];
@@ -744,7 +733,6 @@ function whenClickedOnABlockEl() {
                                         }
                                     }
                                 } else if ((((arr3 == 0) || (arr3 == 1)) && ((arr1 == 1) || (arr1 == undefined)) && (arr2 == 0))) {
-                                    console.log("kkkkkkkkkkkkkkkkkk")
                                     let index = $(this).parent().index();
 
                                     if ($(boardBlocksArr[i + 2]).children('div').eq(index - 2).index() > index) {
@@ -769,7 +757,6 @@ function whenClickedOnABlockEl() {
                                             return
                                         }
                                     } else if (($(boardBlocksArr[i + 2]).children('div').eq(index + 2).index() > index) && ($(boardBlocksArr[i + 2]).children('div').eq(index - 2).index() > index)) {
-                                        console.log("ko oyaa")
                                         if (arr3 == 0) {
                                             if (arr1 == undefined) {
                                                 alert('cant drop')
@@ -787,7 +774,6 @@ function whenClickedOnABlockEl() {
                                             }
                                         } else {
                                             $(boardBlocksArr[i + 1]).children('div').eq(j - 1).css("backgroundColor", 'green');
-                                            console.log('nannaane nannanee nannanne')
                                             let checkRowBlockIndexArr = [j - 1];
                                             let arr = [[i + 1, j - 1]];
                                             let checkArr = [[i + 1, j - 1]];
@@ -831,7 +817,6 @@ function whenClickedOnABlockEl() {
                                             return;
                                         } else {
                                             if (arr3 == 0) {
-                                                console.log('ko oya khhed dn')
                                                 let checkRowBlockIndexArr = [j + 2];
                                                 let arr = [[i - 2, j + 2]];
                                                 let checkArr = [[i - 2, j + 2]]
@@ -856,7 +841,6 @@ function whenClickedOnABlockEl() {
                                 }
 
                             } else if (j == 7) {
-                                console.log('bkack')
                                 if ((arr2 == undefined)) {
                                     alert('cant move')
                                     return;
@@ -927,7 +911,6 @@ function whenClickedOnABlockEl() {
                                             whenClickedOnABlockEl();
                                             ifDblClickedOnACharacterBlock(i, j, i - 1, arr);
                                         } else if ((arr1 == 1) && (arr3 == 0)) {
-                                            console.log("ektm mekaaa")
                                             let checkRowBlockIndexArr = [j + 2, j - 1];
                                             $(boardBlocksArr[i - 1]).children('div').eq(j - 1).css("backgroundColor", 'green');
                                             $(boardBlocksArr[i - 2]).children('div').eq(j + 2).css("backgroundColor", 'green');
@@ -999,12 +982,10 @@ function whenClickedOnABlockEl() {
                                         console.log(arr1 + " = " + arr2)
                                         console.log(arr3 + " (3 = 4) " + arr4)
                                         if ((arr3 == 0) && (arr4 == 0)) {
-                                            console.log('siriyme sra1')
                                             if ((arr1 == undefined) && (arr2 == undefined)) {
                                                 alert('cant drop')
                                                 return;
                                             } else if ((arr1 == undefined) && (arr2 == 1)) {
-                                                console.log('siriyme sra2')
                                                 $(boardBlocksArr[i - 2]).children('div').eq(j - 2).css("backgroundColor", 'green');
                                                 let checkArr = [[i - 2, j - 2]];
                                                 let checkRowBlockIndexArr = [j - 2];
@@ -1015,7 +996,6 @@ function whenClickedOnABlockEl() {
                                                 ifDblClickedOnACharacterBlock(i, j, i - 2, arr);
                                                 return
                                             } else if ((arr2 == undefined) && (arr1 == 1)) {
-                                                console.log('yo yo yo o')
                                                 $(boardBlocksArr[i - 2]).children('div').eq(j + 2).css("backgroundColor", 'green');
 
                                                 let checkRowBlockIndexArr = [j + 2];
@@ -1026,7 +1006,6 @@ function whenClickedOnABlockEl() {
                                                 ifDblClickedOnACharacterBlock(i, j, i - 2, arr);
                                                 return
                                             } else if ((arr2 == 1) && (arr1 == 1)) {
-                                                console.log('yo yo yo o1')
                                                 $(boardBlocksArr[i - 2]).children('div').eq(j + 2).css("backgroundColor", 'green');
                                                 $(boardBlocksArr[i - 2]).children('div').eq(j - 2).css("backgroundColor", 'green');
                                                 let checkRowBlockIndexArr = [j + 2, j - 2];
@@ -1108,7 +1087,6 @@ function whenClickedOnABlockEl() {
                                         }
                                     } else if (($(boardBlocksArr[i - 2]).children('div').eq(index + 2).index() > index) && ($(boardBlocksArr[i - 2]).children('div').eq(index - 2).index() < index)) {
                                         if ((arr1 == 0) && (arr2 == 1)) {
-                                            console.log("chammak challo")
                                             let checkRowBlockIndexArr = [j - 2];
                                             $(boardBlocksArr[i - 1]).children('div').eq(j + 1).css("backgroundColor", 'green');
                                             $(boardBlocksArr[i - 2]).children('div').eq(j - 2).css("backgroundColor", 'green');
@@ -1178,7 +1156,6 @@ function whenClickedOnABlockEl() {
                                                 ifDblClickedOnACharacterBlock(i, j, i - 1, arr);
                                                 return;
                                             } else if ((arr1 == 0) && (arr2 == 1) && ((arr3 == 0) || (arr3 == 1))) {
-                                                console.log('ullai ullai uuuuuuuuuuuuuuuuuuuu')
                                                 $(boardBlocksArr[i - 2]).children('div').eq(j - 2).css("backgroundColor", 'green');
                                                 $(boardBlocksArr[i - 1]).children('div').eq(j + 1).css("backgroundColor", 'green');
                                                 let checkRowBlockIndexArr = [j - 2, j + 1];
@@ -1190,7 +1167,6 @@ function whenClickedOnABlockEl() {
                                                 return
                                             }
                                         } else if ((arr1 == 0) & ((arr2 == undefined || (arr2 == 1))) && (arr4 == 1)) {
-                                            console.log('ullai ullai uuuuuuuuuuuuuuuuuuuuq1')
                                             $(boardBlocksArr[i - 1]).children('div').eq(j + 1).css("backgroundColor", 'green');
                                             let checkRowBlockIndexArr = [j + 1];
                                             let arr = [[i - 1, j + 1]];
@@ -1238,7 +1214,6 @@ function whenClickedOnABlockEl() {
                                         }
                                     }
                                 } else if ((((arr3 == 0) || (arr3 == 1)) && ((arr1 == 1) || (arr1 == undefined)) && (arr2 == 0))) {
-                                    console.log("kkkkkkkkkkkkkkkkkk")
                                     let index = $(this).parent().index();
 
                                     if ($(boardBlocksArr[i - 2]).children('div').eq(index - 2).index() > index) {
@@ -1263,7 +1238,6 @@ function whenClickedOnABlockEl() {
                                             return
                                         }
                                     } else if (($(boardBlocksArr[i - 2]).children('div').eq(index + 2).index() > index) && ($(boardBlocksArr[i - 2]).children('div').eq(index - 2).index() > index)) {
-                                        console.log("ko oyaa")
                                         if (arr3 == 0) {
                                             if (arr1 == undefined) {
                                                 alert('cant drop')
@@ -1356,7 +1330,6 @@ function whenAChanceToMakeABlockToCutOfAnotherBlock(crntRow, crntRowBlockIndex, 
                                         $(boardBlocksArr[arr[1][0]]).children('div').eq(arr[1][1]).droppable({
                                             drop: function (event, ui) {
                                                 alert("Do you want to move");
-                                                console.log("shiihihhihi1")
                                                 ui.draggable.css('position', 'absolute');
                                                 ui.draggable.css('left', 0);
                                                 ui.draggable.css('top', 0);
